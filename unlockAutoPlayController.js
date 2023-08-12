@@ -18,7 +18,6 @@ function onLoadEventHandler() {
 
 function onKeyButtonHandler(event) {
     
-    
     if(event.key == KEYBOARD_CODES.BAR_SPACE)
     {
         videoPlayer.currentTime = 0;
@@ -28,8 +27,7 @@ function onKeyButtonHandler(event) {
 }
 
 function onVideoFininish(event) {
-    console.log("se acabo")
-    
+    videoSection.style.display = HIDE_STYLE_CLASS;
 }
 
 window.onload = onLoadEventHandler;
