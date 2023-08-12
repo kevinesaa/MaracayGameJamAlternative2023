@@ -13,6 +13,7 @@ function onLoadEventHandler() {
     videoPlayer = document.getElementById(VIDEO_PLAYER_COMPONENT_ID);
     
     window.addEventListener("keydown",onKeyButtonHandler);
+    videoPlayer.addEventListener("ended",onVideoFininish);
 }
 
 function onKeyButtonHandler(event) {
@@ -24,6 +25,11 @@ function onKeyButtonHandler(event) {
         videoPlayer.play();
     }
 
+}
+
+function onVideoFininish(event) {
+    console.log("se acabo")
+    
 }
 
 window.onload = onLoadEventHandler;
