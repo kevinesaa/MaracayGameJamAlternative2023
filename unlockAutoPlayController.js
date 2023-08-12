@@ -1,45 +1,60 @@
-const HIDE_STYLE_CLASS = "none";
 const AUDIO_WHITE_PATH = "./res/audio_white.ogg";
+const INTRO_VIDEO_PATH = "./res/robocop.mp4";
 const ID_BASE_AUDIO_CHANNEL = "audio-channel-0";
-
 const ID_VIDEO_SECTION_COMPONENT = "unlock_auto_play_container";
 const ID_VIDEO_PLAYER_COMPONENT = "my-video-player";
 
-const KEYBOARD_CODES = {  BAR_SPACE:" "};
-let videoSection;
-let videoPlayer;
-let audioChannels = [0,0,0,0];
+class UnloadAutoPlayScreen {
 
-function onLoadEventHandler() {
-    
-    videoSection = document.getElementById(ID_VIDEO_SECTION_COMPONENT);
-    videoPlayer = document.getElementById(ID_VIDEO_PLAYER_COMPONENT);
-    for (i = 0; i < audioChannels.length; i++) 
-    {
-        const channelId = ID_BASE_AUDIO_CHANNEL + i;
-        audioChannels[i] = document.getElementById(channelId);
-    }
-    
-    window.addEventListener("keydown",onKeyButtonHandler);
-    videoPlayer.addEventListener("ended",onVideoFininish);
-}
+    eventBus;
+    KEYBOARD_CODES = {  BAR_SPACE:" "};
+    videoSection;
+    videoPlayer;
+    audioChannels = [0,0,0,0];
 
-function onKeyButtonHandler(event) {
-    
-    if(event.key == KEYBOARD_CODES.BAR_SPACE)
-    {
-        videoPlayer.currentTime = 0;
-        videoPlayer.play();
-        audioChannels.forEach( channel => {
-            channel.src = AUDIO_WHITE_PATH;
-            channel.play();
-        });
+    constructor(){
+        this.eventBus = new EventBus();
     }
 
-}
+    init() {
 
-function onVideoFininish(event) {
-    videoSection.style.display = HIDE_STYLE_CLASS;
-}
+        this.videoSection = document.getElementById(ID_VIDEO_SECTION_COMPONENT);
+        this.videoPlayer = document.getElementById(ID_VIDEO_PLAYER_COMPONENT);
+        
+        for (let i = 0; i < this.audioChannels.length; i++) 
+        {
+            const channelId = ID_BASE_AUDIO_CHANNEL + i;
+            this.audioChannels[i] = document.getElementById(channelId);
+        }
+        
+        this.videoPlayer.addEventListener("ended",() => { this.onVideoFinish(); });
+    
+    }
 
-window.onload = onLoadEventHandler;
+    onKeyButtonHandler(event) {
+    
+        if(event.key == this.KEYBOARD_CODES.BAR_SPACE)
+        {
+            this.videoPlayer.currentTime = 0;
+            this.videoPlayer.src = INTRO_VIDEO_PATH;
+            this.videoPlayer.play();
+            this.audioChannels.forEach( channel => {
+                channel.src = AUDIO_WHITE_PATH;
+                channel.play();
+            });
+        }
+    }
+
+    subscribeOnFinishVideo(func) {
+        this.eventBus.subscribe(func);
+    }
+
+    unsubscribeOnFinishVideo(func) {
+        this.eventBus.unsubscribe(func);
+    }
+
+    onVideoFinish() {
+        this.videoSection.style.display = HIDE_STYLE_CLASS;
+        this.eventBus.dispatch();
+    }
+}
