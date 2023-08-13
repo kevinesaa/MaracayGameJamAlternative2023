@@ -38,7 +38,12 @@ function showMainMenu() {
 
 function startGame(players) {
     screenToShow(SCREENS.GAME_PLAY);
+    currentScreen.screenObject.subscribeOnBackToMenuScreen(showMainMenuFromGamePlay);
     currentScreen.screenObject.start(players);
+}
+function showMainMenuFromGamePlay() {
+    currentScreen.screenObject.unsubscribeOnBackToMenuScreen(showMainMenuFromGamePlay);
+    screenToShow(SCREENS.MENU);
 }
 
 function mainInit() {
@@ -52,7 +57,6 @@ function mainInit() {
     SCREENS.CREDITS.screenObject.subscribeOnBackToMenuScreen(showMainMenu);
     SCREENS.MENU.screenObject.subscribeOnShowCredits(showCredits);
     SCREENS.MENU.screenObject.subscribeOnStartGame(startGame);
-    //SCREENS.GAME_PLAY.screenObject.
 }
 
 
