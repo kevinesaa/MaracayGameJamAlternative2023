@@ -22,4 +22,9 @@ class GameplayScreen {
     onKeyButtonHandler(event) {
         console.log("procesar boton en game play");
     }
+
+    start(players) {
+        console.log("inicia la peli");
+        console.log(players);
+    }
 }

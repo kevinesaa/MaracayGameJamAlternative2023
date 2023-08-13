@@ -36,6 +36,11 @@ function showMainMenu() {
     screenToShow(SCREENS.MENU);
 }
 
+function startGame(players) {
+    screenToShow(SCREENS.GAME_PLAY);
+    currentScreen.screenObject.start(players);
+}
+
 function mainInit() {
         
     Object.values(SCREENS).forEach(val => {
@@ -46,6 +51,7 @@ function mainInit() {
     SCREENS.INIT.screenObject.subscribeOnFinishVideo(onIntroFinish);
     SCREENS.CREDITS.screenObject.subscribeOnBackToMenuScreen(showMainMenu);
     SCREENS.MENU.screenObject.subscribeOnShowCredits(showCredits);
+    SCREENS.MENU.screenObject.subscribeOnStartGame(startGame);
     //SCREENS.GAME_PLAY.screenObject.
 }
 

@@ -52,12 +52,12 @@ class MenuScreen {
 
         if(key == this.KEYBOARD_CODES.GO_TO_CREDITS)
         {
-            this.onOnShowCredits();
+            this.onShowCredits();
         }
 
         if(key == this.KEYBOARD_CODES.START_GAME)
         {
-            console.log("START GAME")
+            this.onStartGame();
         }
     }
 
@@ -69,7 +69,21 @@ class MenuScreen {
         this.onShowCreditsEventBus.unsubscribe(func);
     }
 
-    onOnShowCredits() {
+    onShowCredits() {
         this.onShowCreditsEventBus.dispatch();
+    }
+
+    subscribeOnStartGame(func) {
+        this.onStartGameEventBus.subscribe(func);
+    }
+
+    unsubscribeOnStartGame(func) {
+        this.onStartGameEventBus.unsubscribe(func);
+    }
+
+    onStartGame() {
+        //todo
+        /**validar que la cantidad de jugadores sea mayor a 0 */
+        this.onStartGameEventBus.dispatch({test:{}}/** enviar los jugadore que se unieron */);
     }
 }
