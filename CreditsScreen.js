@@ -28,9 +28,20 @@ class CreditsScreen {
         const key = event.key.toUpperCase();
         if(key == this.KEYBOARD_CODES.BACK_MENU_SCREEN)
         {
-            console.log("BACK TO MENU SCREEN")
+            this.onBackToMenuScreen();
         }
     }
 
+    subscribeOnBackToMenuScreen(func) {
+        this.onBackToMenuScreenEventBus.subscribe(func);
+    }
+
+    unsubscribeOnBackToMenuScreen(func) {
+        this.onBackToMenuScreenEventBus.unsubscribe(func);
+    }
+
+    onBackToMenuScreen() {
+        this.onBackToMenuScreenEventBus.dispatch();
+    }
     
 }

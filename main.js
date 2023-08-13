@@ -25,11 +25,15 @@ function screenToShow(screen) {
 function onIntroFinish() {
     
     SCREENS.INIT.screenObject.unsubscribeOnFinishVideo(onIntroFinish);
-    screenToShow(SCREENS.MENU);
+    showMainMenu();
 }
 
 function showCredits() {
     screenToShow(SCREENS.CREDITS);
+}
+
+function showMainMenu() {
+    screenToShow(SCREENS.MENU);
 }
 
 function mainInit() {
@@ -40,8 +44,8 @@ function mainInit() {
     }); 
     screenToShow(SCREENS.INIT);
     SCREENS.INIT.screenObject.subscribeOnFinishVideo(onIntroFinish);
+    SCREENS.CREDITS.screenObject.subscribeOnBackToMenuScreen(showMainMenu);
     SCREENS.MENU.screenObject.subscribeOnShowCredits(showCredits);
-    //SCREENS.CREDITS.screenObject.
     //SCREENS.GAME_PLAY.screenObject.
 }
 
