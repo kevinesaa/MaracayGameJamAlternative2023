@@ -1,26 +1,26 @@
 const AUDIO_WHITE_PATH = "./res/audio_white.ogg";
 const INTRO_VIDEO_PATH = "./res/robocop.mp4";
-const ID_BASE_AUDIO_CHANNEL = "audio-channel-0";
 const ID_VIDEO_SECTION_COMPONENT = "unlock_auto_play_container";
 const ID_VIDEO_PLAYER_COMPONENT = "my-video-player";
 
 class UnloadAutoPlayScreen {
 
-    eventBus;
-    KEYBOARD_CODES = {  BAR_SPACE:" "};
+    onFinishVideoEventBus;
+    KEYBOARD_CODES = {  START_VIDEO:" "};
     videoSection;
+    videoSectionCcsClass;
     videoPlayer;
     audioChannels = [0,0,0,0];
 
     constructor(){
-        this.eventBus = new EventBus();
+        this.onFinishVideoEventBus = new EventBus();
     }
 
     init() {
 
         this.videoSection = document.getElementById(ID_VIDEO_SECTION_COMPONENT);
         this.videoPlayer = document.getElementById(ID_VIDEO_PLAYER_COMPONENT);
-        
+        this.videoSectionCcsClass =  this.videoSection.style.display;
         for (let i = 0; i < this.audioChannels.length; i++) 
         {
             const channelId = ID_BASE_AUDIO_CHANNEL + i;
@@ -31,9 +31,17 @@ class UnloadAutoPlayScreen {
     
     }
 
+    showScreen() {
+        this.videoSection.style.display = this.videoSectionCcsClass;
+    }
+    
+    hideScreen() {
+        this.videoSection.style.display = HIDE_STYLE_CLASS;
+    }
+
     onKeyButtonHandler(event) {
     
-        if(event.key == this.KEYBOARD_CODES.BAR_SPACE)
+        if(event.key == this.KEYBOARD_CODES.START_VIDEO)
         {
             this.videoPlayer.currentTime = 0;
             this.videoPlayer.src = INTRO_VIDEO_PATH;
@@ -46,15 +54,14 @@ class UnloadAutoPlayScreen {
     }
 
     subscribeOnFinishVideo(func) {
-        this.eventBus.subscribe(func);
+        this.onFinishVideoEventBus.subscribe(func);
     }
 
     unsubscribeOnFinishVideo(func) {
-        this.eventBus.unsubscribe(func);
+        this.onFinishVideoEventBus.unsubscribe(func);
     }
 
     onVideoFinish() {
-        this.videoSection.style.display = HIDE_STYLE_CLASS;
-        this.eventBus.dispatch();
+        this.onFinishVideoEventBus.dispatch();
     }
 }

@@ -11,23 +11,38 @@ const SCREENS =  Object.freeze({
 let currentScreen = SCREENS.INIT;
 
 function mainOnKeyButtonHandler(event) {
-
     const screen = currentScreen.screenObject
     screen.onKeyButtonHandler(event);
 }
 
+function screenToShow(screen) {
+
+    currentScreen.screenObject.hideScreen();
+    currentScreen =  screen;
+    currentScreen.screenObject.showScreen();
+}
+
 function onIntroFinish() {
+    
     SCREENS.INIT.screenObject.unsubscribeOnFinishVideo(onIntroFinish);
-    currentScreen =  SCREENS.MENU;
+    screenToShow(SCREENS.MENU);
+}
+
+function showCredits() {
+    screenToShow(SCREENS.CREDITS);
 }
 
 function mainInit() {
         
     Object.values(SCREENS).forEach(val => {
         val.screenObject.init();
+        val.screenObject.hideScreen();
     }); 
-    
+    screenToShow(SCREENS.INIT);
     SCREENS.INIT.screenObject.subscribeOnFinishVideo(onIntroFinish);
+    SCREENS.MENU.screenObject.subscribeOnShowCredits(showCredits);
+    //SCREENS.CREDITS.screenObject.
+    //SCREENS.GAME_PLAY.screenObject.
 }
 
 
