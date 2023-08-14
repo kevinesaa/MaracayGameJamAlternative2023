@@ -2,6 +2,15 @@
 
 <html lang="es">
     <head>
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Press+Start+2P&display=swap" rel="stylesheet">
+        <!-- End fonts -->
+        <link rel="stylesheet" href="styles.css">
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <title id="title">Jueguito</title>
@@ -17,28 +26,74 @@
         </section>
 
         <section>
-            <section id="main_menu_container">
+            <section class="main-menu__container" id="main_menu_container">
                 <!-- aqui va el menu principal-->
-                <h1> Menu </h1>
+                <h1 class="main-menu__title"> Menu </h1>
+                <div class="main-menu__image" >
+                    <video src="res/robocop.mp4" style="width: 100%;" controls></video>
+                </div>
+                <div class="main-menu__options">
+                    <div class="main-menu__play">Jugar</div>
+                    <div class="main-menu__credits">Creditos</div>
+                </div>
+                <div class="main-menu__players">
+                    <div class="main-menu__player">Player 1
+                        <input class="main-menu__player__check" id="player1_check" type="checkbox">
+                    </div>
+                    <div class="main-menu__player">Player 2
+                        <input class="main-menu__player__check" id="player2_check" type="checkbox">
+                    </div>
+                    <div class="main-menu__player">Player 3
+                        <input class="main-menu__player__check" id="player3_check" type="checkbox">
+                    </div>
+                </div>
             </section>
     
-            <section id="credits_container">
+            <section class="credits__container" id="credits_container">
                 <!-- aqui van los creditos-->
-                <h1> créditos </h1>
+                <h1 class="credits__title"> Créditos </h1>
+                <div class="credits__screen">
+                    <div class="credits__screen__names">
+                        <div>Andrea González</div>
+                        <div>Jesvany Rodríguez</div>
+                        <div>José Penagos</div>
+                        <div>Kevin Esaa</div>
+                        <div>Oriana Barrera</div>
+                        <div>Pedro López</div>
+                    </div>
+                </div>
+                <div class="credits__back">
+                    Back
+                </div>
             </section>
     
-            <section id="game_play_container">
+            <section class="game-play__container" id="game_play_container">
                 <!-- aqui va el game play-->
-                <h1> game play screen </h1>
+                <div class="game-play__screen">
+
+                </div>
+                <div class="game-play__dialog">
+                    Prueba de subtitulos
+                </div>
+                <div class="game-play__timer">
+                    <div class="game-play__timer__progress">
+                    </div>
+                </div>
+                <div class="game-play__options">
+                    <div class="game-play__option1"></div>
+                    <div class="game-play__option2"></div>
+                    <div class="game-play__option3"></div>
+                </div>
             </section>
         </section>
         
         <!-- aqui va el primer video para desbloquear el auto play-->
-        <section id="unlock_auto_play_container">
+        <section class="auto-play__container" id="unlock_auto_play_container">
             <div>
-                <video 
-                    id="my-video-player" 
-                    style="width:480px; height: 270px;" > 
+                <p class="auto-play__message">Presiona espacio para comenzar</p>
+                <video
+                    class="auto-play__video"
+                    id="my-video-player"> 
                 </video>
             </div>
         </section>

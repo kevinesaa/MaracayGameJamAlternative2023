@@ -39,14 +39,20 @@ class MenuScreen {
         const key = event.key.toUpperCase();
         if(key == this.KEYBOARD_CODES.PLAYER_ONE_JOIN)
         {
+            const player1Check = document.getElementById("player1_check");
+            player1Check.checked = !player1Check.checked;
             console.log("PLAYER ONE JOIN/UNJOIN")
         }
         if(key == this.KEYBOARD_CODES.PLAYER_TWO_JOIN)
         {
+            const player2Check = document.getElementById("player2_check");
+            player2Check.checked = !player2Check.checked;
             console.log("PLAYER TWO JOIN/UNJOIN")
         }
         if(key == this.KEYBOARD_CODES.PLAYER_THREE_JOIN)
         {
+            const player3Check = document.getElementById("player3_check");
+            player3Check.checked = !player3Check.checked;
             console.log("PLAYER THREE JOIN/UNJOIN")
         }
 
