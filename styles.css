@@ -1,7 +1,17 @@
+/* Fonts */
+
+@font-face {
+    font-family: 'Press Start 2P', sans-serif;
+    src: url('/res/fonts/press-start-2p.woff2') format('woff2'),
+        url('/res/fonts/press-start-2p.woff') format('woff');
+}
+
+/* General styles */
+
 * {
     padding: 0;
     margin: 0;
-    font-family: Poppins, sans-serif;
+    font-family: 'Press Start 2P', sans-serif;
 }
 
 body {
@@ -15,6 +25,7 @@ body {
 }
 
 /* Main menu section */
+
 .main-menu__container {
     display: flex;
     flex-direction: column;
@@ -46,19 +57,42 @@ body {
 }
 
 .main-menu__options > * {
-    border: 2px solid red;
-    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: 0px;
+    border-radius: 2px;
     background-color: #fff;
-    font-size: 30px;
+    font-size: 20px;
     padding: 0.5rem 0.25rem;
-    width: 160px;
+    width: 200px;
     height: 50px;
-    text-align: center;
+    box-shadow: inset -4px -4px 1px 1px grey;
+}
+
+.main-menu__options > *::after {
+    content: '';
+    background: black;
+    position: absolute;
+    width: 105%;
+    height: 100%;
+    z-index: -1;
+}
+
+.main-menu__options > *::before {
+    content: '';
+    background: black;
+    position: absolute;
+    width: 100%;
+    height: 110%;
+    z-index: -1;
 }
 
 .main-menu__players {
     display: flex;
     flex-direction: row;
+    border: double 3px black;
     gap: 10rem;
     font-size: 20px;
     background-color: #fff;
@@ -100,11 +134,12 @@ body {
 .game-play__dialog {
     width: 755px;
     height: 100px;
-    border: solid 5px #fff;
+    border: solid 5px black;
     background-color: grey;
     font-size: 16px;
     color: yellow;
     padding: 1rem;
+    overflow: auto;
 }
 
 .game-play__timer {
@@ -128,14 +163,36 @@ body {
 }
 
 .game-play__options > * {
-    border: 2px solid red;
-    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: 0px;
+    border-radius: 2px;
     background-color: #fff;
-    font-size: 30px;
+    font-size: 20px;
     padding: 0.5rem 0.25rem;
-    width: 210px;
-    height: 40px;
-    text-align: center;
+    width: 200px;
+    height: 50px;
+    box-shadow: inset -4px -4px 1px 1px grey;
+}
+
+.game-play__options > *::after {
+    content: '';
+    background: black;
+    position: absolute;
+    width: 105%;
+    height: 100%;
+    z-index: -1;
+}
+
+.game-play__options > *::before {
+    content: '';
+    background: black;
+    position: absolute;
+    width: 100%;
+    height: 110%;
+    z-index: -1;
 }
 
 /* Credits section */
@@ -170,19 +227,37 @@ body {
     padding: 1rem;
 }
 
-.credits__screen__names > * {
-    font-family: 'Press Start 2P', sans-serif;
+.credits__back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: 0px;
+    border-radius: 2px;
+    background-color: #fff;
+    font-size: 20px;
+    padding: 0.5rem 0.25rem;
+    width: 200px;
+    height: 50px;
+    box-shadow: inset -4px -4px 1px 1px grey;
 }
 
-.credits__back {
-    border: 2px solid red;
-    border-radius: 5px;
-    background-color: #fff;
-    font-size: 30px;
-    padding: 0.5rem 0.25rem;
-    width: 210px;
-    height: 40px;
-    text-align: center;
+.credits__back::after {
+    content: '';
+    background: black;
+    position: absolute;
+    width: 105%;
+    height: 100%;
+    z-index: -1;
+}
+
+.credits__back::before {
+    content: '';
+    background: black;
+    position: absolute;
+    width: 100%;
+    height: 110%;
+    z-index: -1;
 }
 
 /* Auto play section */
@@ -201,12 +276,13 @@ body {
 
 .auto-play__message {
     animation: blink 1.5s linear infinite;
-    font-family: 'Press Start 2P', sans-serif;
     font-size: 50px;
     font-weight: bold;
     color: #fff;
     text-align: center;
 }
+
+/* Animations */
 
 @keyframes fadeIn {
     0% {
