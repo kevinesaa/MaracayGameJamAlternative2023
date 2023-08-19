@@ -36,10 +36,10 @@ function showMainMenu() {
     screenToShow(SCREENS.MENU);
 }
 
-function startGame(players) {
+function startGame(data) {
     screenToShow(SCREENS.GAME_PLAY);
     currentScreen.screenObject.subscribeOnBackToMenuScreen(showMainMenuFromGamePlay);
-    currentScreen.screenObject.start(players);
+    currentScreen.screenObject.start(data);
 }
 function showMainMenuFromGamePlay() {
     currentScreen.screenObject.unsubscribeOnBackToMenuScreen(showMainMenuFromGamePlay);

@@ -4,8 +4,16 @@ class GameplayScreen {
     
     onBackToMenuScreenEventBus;
 
-    KEYBOARD_CODES = {  BACK_MENU_SCREEN:"ESCAPE"};
-
+    KEYBOARD_CODES = {  
+        BACK_MENU_SCREEN:"ESCAPE" ,
+        player1:{option0:"A",option1:"S",option3:"D" },
+        player2:{option0:"J",option1:"K",option3:"L" },
+        player3:{option0:"ARROWLEFT",option1:"ARROWDOWN",option3:"ARROWRIGHT" },
+    };
+    
+    players;
+    playerVotes;
+    playersKeyMapping;
     gamePlayScreenSection;
     gamePlayScreenSectionCcsClass;
     
@@ -27,12 +35,27 @@ class GameplayScreen {
     }
 
     onKeyButtonHandler(event) {
-        console.log("procesar boton en game play");
-        console.log(event);
-        const key = event.key.toUpperCase();
-        if(key == this.KEYBOARD_CODES.BACK_MENU_SCREEN)
+        const keyboardKey = event.key.toUpperCase();
+        if(keyboardKey == this.KEYBOARD_CODES.BACK_MENU_SCREEN)
         {
             this.stop();
+            return;
+        }
+        
+        for(let player of this.playersKeyMapping) {
+            const playerKeyboard = this.KEYBOARD_CODES[player];
+            let option = null;
+            for(let k of Object.keys(playerKeyboard)) {
+                if(playerKeyboard[k] == keyboardKey) {
+                    option = k;
+                    break;
+                }
+            }
+            
+            if(option != null) {
+                console.log("opcion seleccionada");
+                console.log(`${player}: ${option}`);
+            }
         }
     }
 
@@ -44,14 +67,26 @@ class GameplayScreen {
         this.onBackToMenuScreenEventBus.unsubscribe(func);
     }
 
-    start(players) {
+    start(data) {
         console.log("inicia la peli");
         console.log("recuerda inicializar todo");
-        console.log(players);
+        console.log(data);
+        this.players =  {};
+        this.playerVotes = {};
+        this.playersKeyMapping = data.players;
+        for(let value of data.players) {
+            this.players[value] = this.buildPlayerOption();
+            this.playerVotes[value] = false;
+        }
+        
     }
 
     stop() {
         console.log("detener todo antes de mandar al menu principal");
         this.onBackToMenuScreenEventBus.dispatch();
+    }
+
+    buildPlayerOption() {
+        return {option0:false, option1:false, option2:false, defalutOption:true };
     }
 }
