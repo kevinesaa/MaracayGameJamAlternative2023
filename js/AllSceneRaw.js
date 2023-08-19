@@ -5,8 +5,8 @@ const ALL_SCENE_ARRAY = [
         parentId:null, // metada de guia
         description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
         
-        mediaType: TYPES.IMAGEN,
-        mediaPath:"res/intro/intro.mp4",
+        mediaType: TYPES.VIDEO,
+        mediaPath:"./res/scenes/scene0000/choke_on_em_day_of_dead.mp4",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Pedro", text:"Había una vez"}, 
@@ -106,7 +106,7 @@ const ALL_SCENE_ARRAY = [
         description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
         
         mediaType: TYPES.IMAGEN,
-        mediaPath:"res/intro",
+        mediaPath:"./res/scenes/scene0001/luciernaga.jpg",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Pedro", text:"Había una vez"}, 
@@ -166,7 +166,7 @@ const ALL_SCENE_ARRAY = [
         description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
         
         mediaType: TYPES.IMAGEN,
-        mediaPath:"res/intro",
+        mediaPath:"./res/scenes/scene0002/luciernaga.jpg",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Pedro", text:"Había una vez"}, 
@@ -226,7 +226,7 @@ const ALL_SCENE_ARRAY = [
         description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
         
         mediaType: TYPES.IMAGEN,
-        mediaPath:"res/intro",
+        mediaPath:"./res/scenes/scene0003/luciernaga.jpg",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Pedro", text:"Había una vez"}, 
@@ -286,7 +286,7 @@ const ALL_SCENE_ARRAY = [
         description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
         
         mediaType: TYPES.IMAGEN,
-        mediaPath:"res/intro",
+        mediaPath:"./res/scenes/scene0004/luciernaga.jpg",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Pedro", text:"Había una vez"}, 

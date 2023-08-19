@@ -1,4 +1,6 @@
 const ID_GAMEPLAY_SECTION_COMPONENT = "game_play_container";
+const ID_GAMEPLAY_IMAGE_COMPONENT = "image_game_play";
+const ID_GAMEPLAY_VIDEO_COMPONENT = "video_game_play";
 
 class GameplayScreen {
     
@@ -11,6 +13,11 @@ class GameplayScreen {
         player3:{option0:"ARROWLEFT",option1:"ARROWDOWN",option3:"ARROWRIGHT" },
     };
     
+    imageView;
+    imageViewClassCss;
+    videoView;
+    videoViewClassCss;
+
     scenes = [];
     isOptionsOnScreen;
     isCountingVotes;
@@ -28,6 +35,10 @@ class GameplayScreen {
     init() {
         this.gamePlayScreenSection = document.getElementById(ID_GAMEPLAY_SECTION_COMPONENT);
         this.gamePlayScreenSectionCcsClass = this.gamePlayScreenSection.style.display;
+        this.imageView = document.getElementById(ID_GAMEPLAY_IMAGE_COMPONENT);
+        this.imageViewClassCss = this.imageView.style.display;
+        this.videoView = document.getElementById(ID_GAMEPLAY_VIDEO_COMPONENT);
+        this.videoViewClassCss = this.videoView.style.display;
     }
 
     showScreen() {
@@ -86,6 +97,23 @@ class GameplayScreen {
     loadScene() {
         const scene = this.scenes[this.currentSceneIndex];
         console.log(scene.name);
+        if(TYPES.IMAGEN == scene.mediaType)
+        {
+            this.videoView.pause();
+            this.videoView.style.display = HIDE_STYLE_CLASS;
+            this.imageView.style.display = this.imageViewClassCss;
+            this.imageView.src = scene.mediaPath;
+        }
+
+        if(TYPES.VIDEO == scene.mediaType)
+        {
+            this.imageView.style.display = HIDE_STYLE_CLASS;
+            this.videoView.style.display = this.videoViewClassCss;
+            this.videoView.src = scene.mediaPath;
+            this.videoView.currentTime = 0;
+            this.videoView.play();
+        }
+        
         this.isCountingVotes = false;
         this.isOptionsOnScreen = false;
         this.hideOptions();
@@ -182,15 +210,13 @@ class GameplayScreen {
         this.players =  {};
         this.playerVotes = {};
         this.playersKeyMapping = data.players;
-        for(let value of data.players) {
-            this.players[value] = this.buildPlayerOption();
-            this.playerVotes[value] = false;
-        }
         this.loadScene();
     }
 
     stop() {
         console.log("detener todo antes de mandar al menu principal");
+        this.videoView.pause();
+        this.videoView.currentTime = 0;
         this.onBackToMenuScreenEventBus.dispatch();
     }
 
