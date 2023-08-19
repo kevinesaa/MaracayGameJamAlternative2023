@@ -11,50 +11,7 @@ class GameplayScreen {
         player3:{option0:"ARROWLEFT",option1:"ARROWDOWN",option3:"ARROWRIGHT" },
     };
     
-    scenes=[{
-            index:0,
-            name:"escena0",
-            sceneDuration: 10000, 
-            timmerStartAt: 6000, 
-            timmerDuration: 4000,
-            defalutOption:{index : 4},
-            children:[
-                {
-                    index : 1
-                },
-                {
-                    index : 2
-                },
-                {
-                    index : 3
-                }
-            ]
-        },{
-            index:1,
-            name:"escena1",
-            sceneDuration: 10000, 
-            timmerStartAt: 6000, 
-            timmerDuration: 4000,
-        },{
-            index:2,
-            name:"escena2",
-            sceneDuration: 10000, 
-            timmerStartAt: 6000, 
-            timmerDuration: 4000,
-        },{
-            index:3,
-            name:"escena3",
-            sceneDuration: 10000, 
-            timmerStartAt: 6000, 
-            timmerDuration: 4000,
-        },{
-            index:4,
-            name:"escena4",
-            sceneDuration: 10000, 
-            timmerStartAt: 6000, 
-            timmerDuration: 4000,
-        }];
-    
+    scenes = [];
     isOptionsOnScreen;
     isCountingVotes;
     currentSceneIndex;
@@ -129,14 +86,14 @@ class GameplayScreen {
     loadScene() {
         const scene = this.scenes[this.currentSceneIndex];
         console.log(scene.name);
+        this.isCountingVotes = false;
+        this.isOptionsOnScreen = false;
         if(scene.children == null) {
             window.setTimeout(()=>{ this.onMovieEnd(); },scene.sceneDuration);
             return;
         }
-
-        this.isCountingVotes = false;
-        this.isOptionsOnScreen = false;
-        for(let player of Object.keys(this.players)) {
+        
+        for(let player of this.playersKeyMapping) {
             this.players[player] = this.buildPlayerOption();
             this.playerVotes[player] = false;
         }
@@ -156,7 +113,7 @@ class GameplayScreen {
         let votes = {};
         let maxVoteCount = 0;
         //contando votos
-        for(let player of Object.keys(this.players)) {
+        for(let player of this.playersKeyMapping) {
 
             for(let opcion of Object.keys(this.players[player]) ) {
                 
@@ -210,6 +167,7 @@ class GameplayScreen {
 
     start(data) {
         console.log("inicia la peli");
+        this.scenes = data.scenes;
         this.currentSceneIndex = 0;
         this.players =  {};
         this.playerVotes = {};

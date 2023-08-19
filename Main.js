@@ -39,6 +39,7 @@ function showMainMenu() {
 function startGame(data) {
     screenToShow(SCREENS.GAME_PLAY);
     currentScreen.screenObject.subscribeOnBackToMenuScreen(showMainMenuFromGamePlay);
+    data.scenes = ALL_SCENE_ARRAY;
     currentScreen.screenObject.start(data);
 }
 function showMainMenuFromGamePlay() {
