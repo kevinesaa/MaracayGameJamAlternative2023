@@ -88,7 +88,9 @@ class GameplayScreen {
         console.log(scene.name);
         this.isCountingVotes = false;
         this.isOptionsOnScreen = false;
+        this.hideOptions();
         if(scene.children == null) {
+            // cancelar set timeout cuando se haga un stop, cómo se hace???
             window.setTimeout(()=>{ this.onMovieEnd(); },scene.sceneDuration);
             return;
         }
@@ -97,7 +99,7 @@ class GameplayScreen {
             this.players[player] = this.buildPlayerOption();
             this.playerVotes[player] = false;
         }
-        
+        // cancelar set timeout cuando se haga un stop, cómo se hace???
         window.setTimeout(()=>{ this.showOptions(); },scene.timmerStartAt);
         window.setTimeout(()=>{ this.countVotes(); },scene.sceneDuration);
     }
@@ -105,6 +107,14 @@ class GameplayScreen {
     showOptions() {
         this.isOptionsOnScreen = true;
         console.log("mostrando opciones");
+        const scene = this.scenes[this.currentSceneIndex];
+        console.log(scene.children[0].text);
+        console.log(scene.children[1].text);
+        console.log(scene.children[2].text);
+    }
+
+    hideOptions() {
+        console.log("ocultar opciones");
     }
 
     countVotes() {
