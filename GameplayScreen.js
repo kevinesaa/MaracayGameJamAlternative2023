@@ -12,26 +12,43 @@ class GameplayScreen {
     };
     
     scenes=[{
+            index:0,
             name:"escena0",
             sceneDuration: 10000, 
             timmerStartAt: 6000, 
             timmerDuration: 4000,
+            defalutOption:{index : 4},
+            children:[
+                {
+                    index : 1
+                },
+                {
+                    index : 2
+                },
+                {
+                    index : 3
+                }
+            ]
         },{
+            index:1,
             name:"escena1",
             sceneDuration: 10000, 
             timmerStartAt: 6000, 
             timmerDuration: 4000,
         },{
+            index:2,
             name:"escena2",
             sceneDuration: 10000, 
             timmerStartAt: 6000, 
             timmerDuration: 4000,
         },{
+            index:3,
             name:"escena3",
             sceneDuration: 10000, 
             timmerStartAt: 6000, 
             timmerDuration: 4000,
         },{
+            index:4,
             name:"escena4",
             sceneDuration: 10000, 
             timmerStartAt: 6000, 
@@ -79,7 +96,7 @@ class GameplayScreen {
         }
 
         if(!this.isOptionsOnScreen) {
-            console.log("TOVIA NO HA EMPEZADO LA VOTACION");
+            console.log("TODAVIA NO HA EMPEZADO LA VOTACION");
             return;
         }
 
@@ -111,8 +128,19 @@ class GameplayScreen {
 
     loadScene() {
         const scene = this.scenes[this.currentSceneIndex];
+        console.log(scene.name);
+        if(scene.children == null) {
+            window.setTimeout(()=>{ this.onMovieEnd(); },scene.sceneDuration);
+            return;
+        }
+
         this.isCountingVotes = false;
         this.isOptionsOnScreen = false;
+        for(let player of Object.keys(this.players)) {
+            this.players[player] = this.buildPlayerOption();
+            this.playerVotes[player] = false;
+        }
+        
         window.setTimeout(()=>{ this.showOptions(); },scene.timmerStartAt);
         window.setTimeout(()=>{ this.countVotes(); },scene.sceneDuration);
     }
@@ -126,6 +154,7 @@ class GameplayScreen {
         console.log("contando votos");
         this.isCountingVotes = true;
         let votes = {};
+        let maxVoteCount = 0;
         //contando votos
         for(let player of Object.keys(this.players)) {
 
@@ -137,18 +166,34 @@ class GameplayScreen {
 
                 if(this.players[player][opcion]){
                     votes[opcion]++;
+                    if(votes[opcion] > maxVoteCount)
+                    {
+                        maxVoteCount = votes[opcion];
+                    }
                     break;
                 }
             }
         }
 
-        // ordenado votos de mayor a menor
+        
         votes = Object.entries(votes)
             .map( (pair) => { return { key:pair[0], value:pair[1]} })
-            .sort((a,b) => b.value - a.value );
+            .filter(el => el.value == maxVoteCount);
         
-        
-        this.isCountingVotes = false;
+        let winnerOption = votes[ this.getRandomInt(votes.length) ];
+        //si es la opción por default
+        const currentScene = this.scenes[this.currentSceneIndex];
+        if(currentScene[winnerOption.key] != null) {
+            winnerOption = currentScene[winnerOption.key];
+        }
+        else {
+
+            let childIndex =  winnerOption.key.charAt(winnerOption.key.length - 1);
+            childIndex = parseInt(childIndex);
+            winnerOption = currentScene.children[childIndex];
+        }
+        this.currentSceneIndex = winnerOption.index;
+        this.loadScene();
     }
 
     subscribeOnBackToMenuScreen(func) {
@@ -157,6 +202,10 @@ class GameplayScreen {
 
     unsubscribeOnBackToMenuScreen(func) {
         this.onBackToMenuScreenEventBus.unsubscribe(func);
+    }
+    
+    getRandomInt(max) {
+        return Math.floor(Math.random() * max);
     }
 
     start(data) {
@@ -175,6 +224,11 @@ class GameplayScreen {
     stop() {
         console.log("detener todo antes de mandar al menu principal");
         this.onBackToMenuScreenEventBus.dispatch();
+    }
+
+    onMovieEnd() {
+        console.log("se termino la peli");
+        //this.onBackToMenuScreenEventBus.dispatch();
     }
 
     buildPlayerOption() {
