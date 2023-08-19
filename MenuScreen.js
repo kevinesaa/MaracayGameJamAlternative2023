@@ -15,6 +15,7 @@ class MenuScreen {
 
     menuScreenSection;
     menuScreenSectionCcsClass;
+    
 
     constructor() {
         this.onStartGameEventBus = new EventBus();
@@ -90,6 +91,26 @@ class MenuScreen {
     onStartGame() {
         //todo
         /**validar que la cantidad de jugadores sea mayor a 0 */
-        this.onStartGameEventBus.dispatch({test:{}}/** enviar los jugadore que se unieron */);
+        const players = [];
+        
+        for(let i=0; i < 3; i++)
+        {
+            const k = i+1;
+            const playerKey = `player${k}_check`;
+            const playerCheck = document.getElementById(playerKey);
+            if(playerCheck.checked) {
+                
+                players.push(`player${k}`);
+                playerCheck.checked = false;
+            }
+        }
+        
+        if(players.length <= 0) {
+            console.log("NO HAY JUGADORES EN LA PARTIDA")
+        }
+        else {
+            this.onStartGameEventBus.dispatch({players:players}/** enviar los jugadore que se unieron */);
+        }
+
     }
 }
