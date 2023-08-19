@@ -11,6 +11,35 @@ class GameplayScreen {
         player3:{option0:"ARROWLEFT",option1:"ARROWDOWN",option3:"ARROWRIGHT" },
     };
     
+    scenes=[{
+            name:"escena0",
+            sceneDuration: 10000, 
+            timmerStartAt: 6000, 
+            timmerDuration: 4000,
+        },{
+            name:"escena1",
+            sceneDuration: 10000, 
+            timmerStartAt: 6000, 
+            timmerDuration: 4000,
+        },{
+            name:"escena2",
+            sceneDuration: 10000, 
+            timmerStartAt: 6000, 
+            timmerDuration: 4000,
+        },{
+            name:"escena3",
+            sceneDuration: 10000, 
+            timmerStartAt: 6000, 
+            timmerDuration: 4000,
+        },{
+            name:"escena4",
+            sceneDuration: 10000, 
+            timmerStartAt: 6000, 
+            timmerDuration: 4000,
+        }];
+
+    isCountingVotes;
+    currentSceneIndex;
     players;
     playerVotes;
     playersKeyMapping;
@@ -35,6 +64,7 @@ class GameplayScreen {
     }
 
     onKeyButtonHandler(event) {
+        
         const keyboardKey = event.key.toUpperCase();
         if(keyboardKey == this.KEYBOARD_CODES.BACK_MENU_SCREEN)
         {
@@ -42,6 +72,11 @@ class GameplayScreen {
             return;
         }
         
+        if(this.isCountingVotes) {
+            console.log("NO SE ACEPTAN MÁS VOTOS");
+            return;
+        }
+
         for(let player of this.playersKeyMapping) {
             const playerKeyboard = this.KEYBOARD_CODES[player];
             let option = null;
@@ -55,8 +90,36 @@ class GameplayScreen {
             if(option != null) {
                 console.log("opcion seleccionada");
                 console.log(`${player}: ${option}`);
+
+                if(this.playerVotes[player]) {
+                    console.log(`ya el ${player} voto`);
+                }
+                else {
+                    this.playerVotes[player] = true;
+                    this.players[player][option] = true;
+                    this.players[player].defalutOption = false;
+                }
             }
         }
+    }
+
+    loadScene() {
+        const scene = this.scenes[this.currentSceneIndex];
+        this.isCountingVotes = false;
+        window.setTimeout(()=>{ this.showOptions(); },scene.timmerStartAt);
+        window.setTimeout(()=>{ this.countVotes(); },scene.sceneDuration);
+    }
+    
+    showOptions() {
+        this.isCountingVotes = true;
+        console.log("mostrando opciones");
+    }
+
+    countVotes() {
+        console.log("contando votos");
+        this.isCountingVotes = false;
+
+        
     }
 
     subscribeOnBackToMenuScreen(func) {
@@ -69,8 +132,7 @@ class GameplayScreen {
 
     start(data) {
         console.log("inicia la peli");
-        console.log("recuerda inicializar todo");
-        console.log(data);
+        this.currentSceneIndex = 0;
         this.players =  {};
         this.playerVotes = {};
         this.playersKeyMapping = data.players;
@@ -78,7 +140,7 @@ class GameplayScreen {
             this.players[value] = this.buildPlayerOption();
             this.playerVotes[value] = false;
         }
-        
+        this.loadScene();
     }
 
     stop() {
