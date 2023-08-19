@@ -37,7 +37,8 @@ class GameplayScreen {
             timmerStartAt: 6000, 
             timmerDuration: 4000,
         }];
-
+    
+    isOptionsOnScreen;
     isCountingVotes;
     currentSceneIndex;
     players;
@@ -77,6 +78,11 @@ class GameplayScreen {
             return;
         }
 
+        if(!this.isOptionsOnScreen) {
+            console.log("TOVIA NO HA EMPEZADO LA VOTACION");
+            return;
+        }
+
         for(let player of this.playersKeyMapping) {
             const playerKeyboard = this.KEYBOARD_CODES[player];
             let option = null;
@@ -106,20 +112,43 @@ class GameplayScreen {
     loadScene() {
         const scene = this.scenes[this.currentSceneIndex];
         this.isCountingVotes = false;
+        this.isOptionsOnScreen = false;
         window.setTimeout(()=>{ this.showOptions(); },scene.timmerStartAt);
         window.setTimeout(()=>{ this.countVotes(); },scene.sceneDuration);
     }
     
     showOptions() {
-        this.isCountingVotes = true;
+        this.isOptionsOnScreen = true;
         console.log("mostrando opciones");
     }
 
     countVotes() {
         console.log("contando votos");
-        this.isCountingVotes = false;
+        this.isCountingVotes = true;
+        let votes = {};
+        //contando votos
+        for(let player of Object.keys(this.players)) {
 
+            for(let opcion of Object.keys(this.players[player]) ) {
+                
+                if(!votes.hasOwnProperty(opcion)) {
+                    votes[opcion] = 0;
+                }
+
+                if(this.players[player][opcion]){
+                    votes[opcion]++;
+                    break;
+                }
+            }
+        }
+
+        // ordenado votos de mayor a menor
+        votes = Object.entries(votes)
+            .map( (pair) => { return { key:pair[0], value:pair[1]} })
+            .sort((a,b) => b.value - a.value );
         
+        
+        this.isCountingVotes = false;
     }
 
     subscribeOnBackToMenuScreen(func) {
