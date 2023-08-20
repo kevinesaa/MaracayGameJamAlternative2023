@@ -5,6 +5,7 @@ const ID_GAMEPLAY_VIDEO_COMPONENT = "video_game_play";
 class GameplayScreen {
     
     gameplayOptionsController;
+    gameplayTimerBarController;
     onBackToMenuScreenEventBus;
 
     KEYBOARD_CODES = {  
@@ -32,6 +33,7 @@ class GameplayScreen {
     constructor() {
         this.onBackToMenuScreenEventBus = new EventBus();
         this.gameplayOptionsController = new GameplayOptionsController();
+        this.gameplayTimerBarController = new GameplayTimerBarController();
     }
 
     init() {
@@ -42,6 +44,7 @@ class GameplayScreen {
         this.videoView = document.getElementById(ID_GAMEPLAY_VIDEO_COMPONENT);
         this.videoViewClassCss = this.videoView.style.display;
         this.gameplayOptionsController.init();
+        this.gameplayTimerBarController.init();
     }
 
     showScreen() {
@@ -140,6 +143,7 @@ class GameplayScreen {
         console.log("mostrando opciones");
         const scene = this.scenes[this.currentSceneIndex];
         this.gameplayOptionsController.showOptions(scene.children.map(c => c.text));
+        this.gameplayTimerBarController.start(scene.timmerDuration);
     }
 
     hideOptions() {
