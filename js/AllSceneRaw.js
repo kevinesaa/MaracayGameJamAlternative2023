@@ -106,7 +106,7 @@ const ALL_SCENE_ARRAY = [
         description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
         
         mediaType: TYPES.IMAGEN,
-        mediaPath:"./res/scenes/scene0001/luciernaga.jpg",
+        mediaPath:"./res/scenes/scene0001/marco.png",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Pedro", text:"Había una vez"}, 
@@ -166,7 +166,7 @@ const ALL_SCENE_ARRAY = [
         description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
         
         mediaType: TYPES.IMAGEN,
-        mediaPath:"./res/scenes/scene0002/luciernaga.jpg",
+        mediaPath:"./res/scenes/scene0002/marco.png",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Pedro", text:"Había una vez"}, 
@@ -226,7 +226,7 @@ const ALL_SCENE_ARRAY = [
         description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
         
         mediaType: TYPES.IMAGEN,
-        mediaPath:"./res/scenes/scene0003/luciernaga.jpg",
+        mediaPath:"./res/scenes/scene0003/marco.png",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Pedro", text:"Había una vez"}, 
@@ -286,7 +286,7 @@ const ALL_SCENE_ARRAY = [
         description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
         
         mediaType: TYPES.IMAGEN,
-        mediaPath:"./res/scenes/scene0004/luciernaga.jpg",
+        mediaPath:"./res/scenes/scene0004/marco.png",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Pedro", text:"Había una vez"}, 
