@@ -24,6 +24,9 @@ class GameplayOptionsController {
     
     hideOptions() {
         this.optionsSection.style.display = HIDE_STYLE_CLASS;
+        for(let i=0; i < 3; i++) {
+            this.optionTexts[i].innerText = "";
+        }
     }
 
     showOptions(optionsTextArray) {
