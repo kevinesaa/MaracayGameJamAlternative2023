@@ -17,6 +17,8 @@ class GameplayScreen {
     
     imageView;
     imageViewClassCss;
+    
+    shouldPlayVideo = false;
     videoView;
     videoViewClassCss;
 
@@ -42,6 +44,13 @@ class GameplayScreen {
         this.imageView = document.getElementById(ID_GAMEPLAY_IMAGE_COMPONENT);
         this.imageViewClassCss = this.imageView.style.display;
         this.videoView = document.getElementById(ID_GAMEPLAY_VIDEO_COMPONENT);
+        //https://github.com/elan-ev/opencast-studio/issues/581
+        this.videoView.addEventListener("loadeddata",() => { 
+            if(this.shouldPlayVideo) {
+                this.videoView.play();
+            }
+        });
+
         this.videoViewClassCss = this.videoView.style.display;
         this.gameplayOptionsController.init();
         this.gameplayTimerBarController.init();
@@ -105,7 +114,7 @@ class GameplayScreen {
         console.log(scene.name);
         if(TYPES.IMAGEN == scene.mediaType)
         {
-            this.videoView.pause();
+            this.stopVideoGamePlay();
             this.videoView.style.display = HIDE_STYLE_CLASS;
             this.imageView.style.display = this.imageViewClassCss;
             this.imageView.src = scene.mediaPath;
@@ -117,7 +126,7 @@ class GameplayScreen {
             this.videoView.style.display = this.videoViewClassCss;
             this.videoView.src = scene.mediaPath;
             this.videoView.currentTime = 0;
-            this.videoView.play();
+            this.playVideoGamePlay();
         }
         
         this.isCountingVotes = false;
@@ -218,10 +227,23 @@ class GameplayScreen {
         this.loadScene();
     }
 
+    playVideoGamePlay() {
+        this.shouldPlayVideo = true;
+        this.videoView.load();
+    }
+
+    stopVideoGamePlay() {
+        this.shouldPlayVideo = false;
+        this.videoView.load();
+    }
+
     stop() {
         console.log("detener todo antes de mandar al menu principal");
-        this.videoView.pause();
-        this.videoView.currentTime = 0;
+        if (!this.videoView.paused) {
+            this.videoView.pause();
+            this.videoView.currentTime = 0;
+        }
+        
         this.onBackToMenuScreenEventBus.dispatch();
     }
 
