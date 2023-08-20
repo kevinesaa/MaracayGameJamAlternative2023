@@ -10,10 +10,12 @@ class UnloadAutoPlayScreen {
     videoSection;
     videoSectionCcsClass;
     videoPlayer;
-    audioChannels = [0,0,0,0];
+    audioController;
+    
 
     constructor(){
         this.onFinishVideoEventBus = new EventBus();
+        this.audioController = new AudioController();
     }
 
     init() {
@@ -21,13 +23,13 @@ class UnloadAutoPlayScreen {
         this.videoSection = document.getElementById(ID_VIDEO_SECTION_COMPONENT);
         this.videoPlayer = document.getElementById(ID_VIDEO_PLAYER_COMPONENT);
         this.videoSectionCcsClass =  this.videoSection.style.display;
-        for (let i = 0; i < this.audioChannels.length; i++) 
-        {
-            const channelId = ID_BASE_AUDIO_CHANNEL + i;
-            this.audioChannels[i] = document.getElementById(channelId);
-        }
+        this.audioController.init();
         
         this.videoPlayer.addEventListener("ended",() => { this.onVideoFinish(); });
+        //https://github.com/elan-ev/opencast-studio/issues/581
+        this.videoPlayer.addEventListener("loadeddata",() => { 
+            this.videoPlayer.play();
+        });
     
     }
 
@@ -45,11 +47,16 @@ class UnloadAutoPlayScreen {
         {
             this.videoPlayer.currentTime = 0;
             this.videoPlayer.src = INTRO_VIDEO_PATH;
-            this.videoPlayer.play();
-            this.audioChannels.forEach( channel => {
-                channel.src = AUDIO_WHITE_PATH;
-                channel.play();
-            });
+            this.videoPlayer.load();
+            const channelLenght = this.audioController.getChannelsCount();
+            for(let i=0; i < channelLenght; i++) {
+                this.audioController.play({
+                    channelIndex:i, 
+                    path:AUDIO_WHITE_PATH, 
+                    loop:false
+                });
+            }
+            this.audioController.stopAllChannels();
         }
     }
 
