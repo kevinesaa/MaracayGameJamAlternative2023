@@ -190,8 +190,8 @@ class GameplayScreen {
             .filter(el => el.value == maxVoteCount);
         
         let winnerOption = votes[ this.getRandomInt(votes.length) ];
-        //si es la opción por default
         
+        //si es la opción por default
         const currentScene = this.scenes[this.currentSceneIndex];
         if(currentScene[winnerOption.key] != null) {
             winnerOption = currentScene[winnerOption.key];
