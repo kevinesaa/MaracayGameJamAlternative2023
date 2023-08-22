@@ -1,9 +1,9 @@
 /* Fonts */
 
 @font-face {
-    font-family: 'Press Start 2P', sans-serif;
-    src: url('/res/fonts/press-start-2p.woff2') format('woff2'),
-        url('/res/fonts/press-start-2p.woff') format('woff');
+    font-family: 'Press Start 2P';
+    src: url('res/fonts/press-start-2p.woff2') format('woff2'),
+        url('res/fonts/press-start-2p.woff') format('woff');
 }
 
 /* General styles */
@@ -131,6 +131,12 @@ body {
     border-radius: 5px;
 }
 
+.game-play__screen > * {
+    width: 480px;
+    height: 270px;
+    border-radius: 5px;
+}
+
 .game-play__dialog {
     width: 755px;
     height: 100px;
@@ -144,16 +150,22 @@ body {
 
 .game-play__timer {
     width: 100%;
-    height: 20px;
+    background-color: #f3f3f3;
     border: solid 3px #fff;
 }
 
 .game-play__timer__progress {
-    height: 100%;
+    height: 20px;
     width: 0;
     background-color: green;
-    transition: width 0.5s ease;
+    transition: width 1s linear;
 
+}
+
+.game-play__options__container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
 }
 
 .game-play__options {
@@ -170,7 +182,8 @@ body {
     border: 0px;
     border-radius: 2px;
     background-color: #fff;
-    font-size: 20px;
+    font-size: 16px;
+    text-align: center;
     padding: 0.5rem 0.25rem;
     width: 200px;
     height: 50px;

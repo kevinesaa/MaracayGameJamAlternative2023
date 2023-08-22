@@ -121,6 +121,7 @@ class GameplayScreen {
     loadScene() {
         const scene = this.scenes[this.currentSceneIndex];
         console.log(scene.name);
+        
         if(TYPES.IMAGEN == scene.mediaType)
         {
             this.stopVideoGamePlay();
@@ -161,6 +162,7 @@ class GameplayScreen {
         console.log("mostrando opciones");
         const scene = this.scenes[this.currentSceneIndex];
         this.gameplayOptionsController.showOptions(scene.children.map(c => c.text));
+        this.gameplayTimerBarController.reset();
         this.gameplayTimerBarController.start(scene.timmerDuration);
     }
 
