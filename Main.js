@@ -39,12 +39,18 @@ function showMainMenu() {
 function startGame(data) {
     screenToShow(SCREENS.GAME_PLAY);
     currentScreen.screenObject.subscribeOnBackToMenuScreen(showMainMenuFromGamePlay);
+    currentScreen.screenObject.subscribeOnMovieEnd(onMovieEndMain);
     data.scenes = ALL_SCENE_ARRAY;
     currentScreen.screenObject.start(data);
 }
 function showMainMenuFromGamePlay() {
     currentScreen.screenObject.unsubscribeOnBackToMenuScreen(showMainMenuFromGamePlay);
     screenToShow(SCREENS.MENU);
+}
+
+function onMovieEndMain() {
+    currentScreen.screenObject.unsubscribeOnMovieEnd(onMovieEndMain);
+    showCredits();
 }
 
 function mainInit() {

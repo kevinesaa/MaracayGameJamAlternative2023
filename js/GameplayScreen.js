@@ -7,6 +7,7 @@ class GameplayScreen {
     gameplayOptionsController;
     gameplayTimerBarController;
     onBackToMenuScreenEventBus;
+    onMovieEndEventBus;
 
     KEYBOARD_CODES = {  
         BACK_MENU_SCREEN:"ESCAPE" ,
@@ -34,6 +35,7 @@ class GameplayScreen {
     
     constructor() {
         this.onBackToMenuScreenEventBus = new EventBus();
+        this.onMovieEndEventBus = new EventBus();
         this.gameplayOptionsController = new GameplayOptionsController();
         this.gameplayTimerBarController = new GameplayTimerBarController();
     }
@@ -250,7 +252,15 @@ class GameplayScreen {
 
     onMovieEnd() {
         console.log("se termino la peli");
-        //this.onBackToMenuScreenEventBus.dispatch();
+        this.onMovieEndEventBus.dispatch();
+    }
+
+    subscribeOnMovieEnd(func) {
+        this.onMovieEndEventBus.subscribe(func);
+    }
+
+    unsubscribeOnMovieEnd(func) {
+        this.onMovieEndEventBus.unsubscribe(func);
     }
 
     buildPlayerOption() {
