@@ -32,12 +32,19 @@ class GameplayScreen {
     playersKeyMapping;
     gamePlayScreenSection;
     gamePlayScreenSectionCcsClass;
+
+    showRunnableWrapper;
+    changeSceneRunnableWrapper;
+    endMovieRunnableWrapper;
     
     constructor() {
         this.onBackToMenuScreenEventBus = new EventBus();
         this.onMovieEndEventBus = new EventBus();
         this.gameplayOptionsController = new GameplayOptionsController();
         this.gameplayTimerBarController = new GameplayTimerBarController();
+        this.showRunnableWrapper = new DelayTimeRunnableWrapper(()=>{ this.showOptions(); });
+        this.changeSceneRunnableWrapper = new DelayTimeRunnableWrapper(()=>{ this.countVotes(); });
+        this.endMovieRunnableWrapper = new DelayTimeRunnableWrapper(()=>{ this.onMovieEnd(); });
     }
 
     init() {
@@ -135,8 +142,8 @@ class GameplayScreen {
         this.isOptionsOnScreen = false;
         this.hideOptions();
         if(scene.children == null) {
-            // cancelar set timeout cuando se haga un stop, cómo se hace???
-            window.setTimeout(()=>{ this.onMovieEnd(); },scene.sceneDuration);
+            
+            this.endMovieRunnableWrapper.execute(scene.sceneDuration);
             return;
         }
         
@@ -144,9 +151,9 @@ class GameplayScreen {
             this.players[player] = this.buildPlayerOption();
             this.playerVotes[player] = false;
         }
-        // cancelar set timeout cuando se haga un stop, cómo se hace???
-        window.setTimeout(()=>{ this.showOptions(); },scene.timmerStartAt);
-        window.setTimeout(()=>{ this.countVotes(); },scene.sceneDuration);
+        
+        this.showRunnableWrapper.execute(scene.timmerStartAt);
+        this.changeSceneRunnableWrapper.execute(scene.sceneDuration);
     }
     
     showOptions() {
@@ -246,12 +253,16 @@ class GameplayScreen {
             this.videoView.pause();
             this.videoView.currentTime = 0;
         }
-        
+        this.showRunnableWrapper.interrupt();
+        this.changeSceneRunnableWrapper.interrupt();
+        this.endMovieRunnableWrapper.interrupt();
         this.onBackToMenuScreenEventBus.dispatch();
     }
 
     onMovieEnd() {
         console.log("se termino la peli");
+        this.showRunnableWrapper.interrupt();
+        this.changeSceneRunnableWrapper.interrupt();
         this.onMovieEndEventBus.dispatch();
     }
 
