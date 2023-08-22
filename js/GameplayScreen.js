@@ -10,9 +10,9 @@ class GameplayScreen {
 
     KEYBOARD_CODES = {  
         BACK_MENU_SCREEN:"ESCAPE" ,
-        player1:{option0:"A",option1:"S",option3:"D" },
-        player2:{option0:"J",option1:"K",option3:"L" },
-        player3:{option0:"ARROWLEFT",option1:"ARROWDOWN",option3:"ARROWRIGHT" },
+        player1:{option0:"A",option1:"S",option2:"D" },
+        player2:{option0:"J",option1:"K",option2:"L" },
+        player3:{option0:"ARROWLEFT",option1:"ARROWDOWN",option2:"ARROWRIGHT" },
     };
     
     imageView;
@@ -191,6 +191,7 @@ class GameplayScreen {
         
         let winnerOption = votes[ this.getRandomInt(votes.length) ];
         //si es la opción por default
+        
         const currentScene = this.scenes[this.currentSceneIndex];
         if(currentScene[winnerOption.key] != null) {
             winnerOption = currentScene[winnerOption.key];
