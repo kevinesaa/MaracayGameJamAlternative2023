@@ -9,10 +9,10 @@ const ALL_SCENE_ARRAY = [
         mediaPath:"./res/scenes/scene0000/choke_on_em_day_of_dead.mp4",
         /** los substítulos son opcionales */
         substitles: [ 
-            {character:"Pedro", text:"Había una vez"}, 
-            {character:"Pedro", text:"En un lugar muy, muy lejano..."},
-            {character:"Narrador", text:"soy tu consciencia"}, 
-            {character:"Narrador", text:"esa voz en tu mente"}
+            {character:"Narrador", text:"Hoy el día esta nublado y tengo sueño…"}, 
+            {character:"Narrador", text:" Ha de ser el efecto de las pastillas."},
+            {character:"Narrador", text:"Estoy cansada de estar encerrada"},
+            {character:"Narrador", text:"¿qué me puedes recomendar hacer?"},
         ],
         sceneDuration: 10000, // 10 segundos, el tiempo que dura la escena
         timmerStartAt: 6000, // 6 segundos después de iniciada la escena
@@ -66,7 +66,7 @@ const ALL_SCENE_ARRAY = [
         children: [
             {
                 /* este es el texto que ve el usuario para escoger esa acción*/ 
-                text:  "ocultase dentro de una cueva" ,
+                text:  "Vamos a salir" ,
     
                 /** esta es la escena que se va a desarrollar si se escoge está opción*/
                 id:"00001", // metada de guia
@@ -77,7 +77,7 @@ const ALL_SCENE_ARRAY = [
             },
             {
                 /* este es el texto que ve el usuario para escoger esa acción*/ 
-                text:  "Huir en la balsa" ,
+                text:  "Habla con la mantis" ,
     
                 /** esta es la escena que se va a desarrollar si se escoge está opción*/
                 id:"00002", // metada de guia
@@ -87,7 +87,7 @@ const ALL_SCENE_ARRAY = [
             },
             {
                 /* este es el texto que ve el usuario para escoger esa acción */ 
-                text:  "tirarse al piso y hacese bolita" ,
+                text:  "Recuéstate en tu cama" ,
     
                 /** esta es la escena que se va a desarrollar si se escoge está opción*/
                 id:"00003", // metada de guia
