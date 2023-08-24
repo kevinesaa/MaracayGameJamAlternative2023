@@ -42,6 +42,7 @@ class GameplayScreen {
         this.onMovieEndEventBus = new EventBus();
         this.gameplayOptionsController = new GameplayOptionsController();
         this.gameplayTimerBarController = new GameplayTimerBarController();
+        this.gameplaySubtitlesController = new GameplaySubtitlesController();
         this.showOptionsRunnableWrapper = new DelayTimeRunnableWrapper(()=>{ this.showOptions(); });
         this.changeSceneRunnableWrapper = new DelayTimeRunnableWrapper(()=>{ this.countVotes(); });
         this.endMovieRunnableWrapper = new DelayTimeRunnableWrapper(()=>{ this.onMovieEnd(); });
@@ -63,6 +64,7 @@ class GameplayScreen {
         this.videoViewClassCss = this.videoView.style.display;
         this.gameplayOptionsController.init();
         this.gameplayTimerBarController.init();
+        this.gameplaySubtitlesController.init();
     }
 
     showScreen() {
@@ -121,6 +123,8 @@ class GameplayScreen {
     loadScene() {
         const scene = this.scenes[this.currentSceneIndex];
         console.log(scene.name);
+        this.gameplaySubtitlesController.reset();
+        this.gameplaySubtitlesController.start(scene.substitles.map(c => c.text + "<br>"), 500);
         
         if(TYPES.IMAGEN == scene.mediaType)
         {
@@ -258,6 +262,7 @@ class GameplayScreen {
         this.showOptionsRunnableWrapper.interrupt();
         this.changeSceneRunnableWrapper.interrupt();
         this.endMovieRunnableWrapper.interrupt();
+        this.gameplaySubtitlesController.stop();
         this.onBackToMenuScreenEventBus.dispatch();
     }
 
@@ -265,6 +270,7 @@ class GameplayScreen {
         console.log("se termino la peli");
         this.showOptionsRunnableWrapper.interrupt();
         this.changeSceneRunnableWrapper.interrupt();
+        this.gameplaySubtitlesController.stop();
         this.onMovieEndEventBus.dispatch();
     }
 
