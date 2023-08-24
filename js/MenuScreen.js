@@ -1,5 +1,7 @@
 const ID_MENU_SECTION_COMPONENT = "main_menu_container";
+const PLAYER_ONE_JOIN_SOUND  = "./res/mainMenu/player_one_join.wav"; 
 const MAIN_MENU_PATH_SONG = "./res/mainMenu/SONG.mp3"; 
+
 
 class MenuScreen {
     
@@ -32,11 +34,13 @@ class MenuScreen {
 
     showScreen() {
         this.menuScreenSection.style.display = this.menuScreenSectionCcsClass;
+        
         this.audioController.play({ 
             channelIndex:0,
             path:MAIN_MENU_PATH_SONG,
             loop: true
         });
+        
     }
     
     hideScreen() {
@@ -52,28 +56,61 @@ class MenuScreen {
             const player1Check = document.getElementById("player1_check");
             player1Check.checked = !player1Check.checked;
             console.log("PLAYER ONE JOIN/UNJOIN")
+            if(player1Check.checked) {
+                this.audioController.play({ 
+                    channelIndex:1,
+                    path:PLAYER_ONE_JOIN_SOUND,
+                    loop: false
+                });
+            }
+            
         }
         if(key == this.KEYBOARD_CODES.PLAYER_TWO_JOIN)
         {
             const player2Check = document.getElementById("player2_check");
             player2Check.checked = !player2Check.checked;
             console.log("PLAYER TWO JOIN/UNJOIN")
+            if(player2Check.checked) {
+                this.audioController.play({ 
+                    channelIndex:2,
+                    path:PLAYER_ONE_JOIN_SOUND,
+                    loop: false
+                });
+            }
         }
         if(key == this.KEYBOARD_CODES.PLAYER_THREE_JOIN)
         {
             const player3Check = document.getElementById("player3_check");
             player3Check.checked = !player3Check.checked;
             console.log("PLAYER THREE JOIN/UNJOIN")
+            if(player3Check.checked) {
+                this.audioController.play({ 
+                    channelIndex:3,
+                    path:PLAYER_ONE_JOIN_SOUND,
+                    loop: false
+                });
+            }
         }
 
         if(key == this.KEYBOARD_CODES.GO_TO_CREDITS)
         {
             this.onShowCredits();
+            this.audioController.play({ 
+                channelIndex:3,
+                path:PLAYER_ONE_JOIN_SOUND,
+                loop: false
+            });
         }
 
         if(key == this.KEYBOARD_CODES.START_GAME)
         {
-            this.onStartGame();
+            this.audioController.play({ 
+                channelIndex:3,
+                path:"./res/mainMenu/start.mp3",
+                loop: false
+            });
+
+            setTimeout(()=>{this.onStartGame();}, 1500);
         }
     }
 
