@@ -110,7 +110,7 @@ class MenuScreen {
                 loop: false
             });
 
-            setTimeout(()=>{this.onStartGame();}, 1500);
+            setTimeout(()=>{this.onStartGame();}, 2000);
         }
     }
 
