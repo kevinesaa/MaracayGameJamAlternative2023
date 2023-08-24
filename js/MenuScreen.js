@@ -1,4 +1,5 @@
 const ID_MENU_SECTION_COMPONENT = "main_menu_container";
+const MAIN_MENU_PATH_SONG = "./res/mainMenu/SONG.mp3"; 
 
 class MenuScreen {
     
@@ -15,24 +16,32 @@ class MenuScreen {
 
     menuScreenSection;
     menuScreenSectionCcsClass;
-    
+    audioController;
 
     constructor() {
         this.onStartGameEventBus = new EventBus();
         this.onShowCreditsEventBus = new EventBus();
+        this.audioController = new AudioController();
     }
 
     init() {
         this.menuScreenSection = document.getElementById(ID_MENU_SECTION_COMPONENT);
         this.menuScreenSectionCcsClass = this.menuScreenSection.style.display;
+        this.audioController.init();
     }
 
     showScreen() {
         this.menuScreenSection.style.display = this.menuScreenSectionCcsClass;
+        this.audioController.play({ 
+            channelIndex:0,
+            path:MAIN_MENU_PATH_SONG,
+            loop: true
+        });
     }
     
     hideScreen() {
         this.menuScreenSection.style.display = HIDE_STYLE_CLASS;
+        this.audioController.stopChannelByIndex(0);
     }
 
     onKeyButtonHandler(event) {
@@ -89,8 +98,7 @@ class MenuScreen {
     }
 
     onStartGame() {
-        //todo
-        /**validar que la cantidad de jugadores sea mayor a 0 */
+        
         const players = [];
         
         for(let i=0; i < 3; i++)
@@ -109,6 +117,7 @@ class MenuScreen {
             console.log("NO HAY JUGADORES EN LA PARTIDA")
         }
         else {
+            this.audioController.stopAllChannels();
             this.onStartGameEventBus.dispatch({players:players}/** enviar los jugadore que se unieron */);
         }
 

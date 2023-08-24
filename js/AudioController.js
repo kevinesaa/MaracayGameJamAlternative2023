@@ -33,6 +33,7 @@ class AudioController {
             const channel = this.audioChannels[audioProperties.channelIndex];
             this.shouldPlay[audioProperties.channelIndex] = true;
             channel.src = audioProperties.path;
+            channel.loop = audioProperties.loop;
             channel.load();
         }
     }
