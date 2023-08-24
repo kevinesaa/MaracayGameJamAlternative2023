@@ -1,9 +1,13 @@
 const ID_GAMEPLAY_SECTION_COMPONENT = "game_play_container";
 const ID_GAMEPLAY_IMAGE_COMPONENT = "image_game_play";
 const ID_GAMEPLAY_VIDEO_COMPONENT = "video_game_play";
+const GAME_PLAY_SONG="./res/gameplay/song.mp3";
+
 
 class GameplayScreen {
     
+    audioController;
+    gameplaySubtitlesController;
     gameplayOptionsController;
     gameplayTimerBarController;
     onBackToMenuScreenEventBus;
@@ -41,6 +45,7 @@ class GameplayScreen {
         this.onBackToMenuScreenEventBus = new EventBus();
         this.onMovieEndEventBus = new EventBus();
         this.gameplayOptionsController = new GameplayOptionsController();
+        this.audioController = new AudioController();
         this.gameplayTimerBarController = new GameplayTimerBarController();
         this.gameplaySubtitlesController = new GameplaySubtitlesController();
         this.showOptionsRunnableWrapper = new DelayTimeRunnableWrapper(()=>{ this.showOptions(); });
@@ -62,6 +67,7 @@ class GameplayScreen {
         });
 
         this.videoViewClassCss = this.videoView.style.display;
+        this.audioController.init();
         this.gameplayOptionsController.init();
         this.gameplayTimerBarController.init();
         this.gameplaySubtitlesController.init();
@@ -69,6 +75,11 @@ class GameplayScreen {
 
     showScreen() {
         this.gamePlayScreenSection.style.display = this.gamePlayScreenSectionCcsClass;
+        this.audioController.play({
+            channelIndex: 0,
+            path: GAME_PLAY_SONG,
+            loop: true
+        });
     }
     
     hideScreen() {
@@ -115,6 +126,17 @@ class GameplayScreen {
                     this.playerVotes[player] = true;
                     this.players[player][option] = true;
                     this.players[player].defalutOption = false;
+
+                    
+
+                    /** */
+                    this.audioController.play({ 
+                        channelIndex:3,
+                        path:"./res/mainMenu/start.mp3",
+                        loop: false
+                    });
+
+                    
                 }
             }
         }
@@ -123,6 +145,7 @@ class GameplayScreen {
     loadScene() {
         const scene = this.scenes[this.currentSceneIndex];
         console.log(scene.name);
+        //this.audioController.stopAllChannels();
         this.gameplaySubtitlesController.reset();
         this.gameplaySubtitlesController.start(scene.substitles.map(c => c.text + "<br>"), 500);
         
@@ -255,14 +278,12 @@ class GameplayScreen {
 
     stop() {
         console.log("detener todo antes de mandar al menu principal");
-        if (!this.videoView.paused) {
-            this.videoView.pause();
-            this.videoView.currentTime = 0;
-        }
+        this.stopVideoGamePlay();
         this.showOptionsRunnableWrapper.interrupt();
         this.changeSceneRunnableWrapper.interrupt();
         this.endMovieRunnableWrapper.interrupt();
         this.gameplaySubtitlesController.stop();
+        this.audioController.stopAllChannels();
         this.onBackToMenuScreenEventBus.dispatch();
     }
 
@@ -271,6 +292,7 @@ class GameplayScreen {
         this.showOptionsRunnableWrapper.interrupt();
         this.changeSceneRunnableWrapper.interrupt();
         this.gameplaySubtitlesController.stop();
+        this.audioController.stopAllChannels();
         this.onMovieEndEventBus.dispatch();
     }
 
