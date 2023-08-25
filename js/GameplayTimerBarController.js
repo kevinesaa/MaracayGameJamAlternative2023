@@ -22,7 +22,6 @@ class GameplayTimerBarController {
           const currentTime = new Date().getTime();
           const elapsedTime = currentTime - startTime;
           const progressPercent = (elapsedTime / timeToFill) * 100;
-          console.log(progressPercent)
           
           this.progress = Math.min(progressPercent, 100);
           this.progressBar.style.width = this.progress + "%";

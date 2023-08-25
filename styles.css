@@ -146,6 +146,7 @@ body {
     color: yellow;
     padding: 1rem;
     overflow: auto;
+    text-align: justify;
 }
 
 .game-play__timer {
