@@ -6,7 +6,7 @@ const ALL_SCENE_ARRAY = [
         description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
         
         mediaType: TYPES.VIDEO,
-        mediaPath:"./res/scenes/scene0000/choke_on_em_day_of_dead.mp4",
+        mediaPath:"./res/scenes/scene0000/scene0000.mp4",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Narrador", text:"Hoy el día esta nublado y tengo sueño…"}, 

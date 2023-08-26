@@ -1,5 +1,5 @@
 const AUDIO_WHITE_PATH = "./res/opening/audio_white.ogg";
-const INTRO_VIDEO_PATH = "./res/opening/robocop.mp4";
+const INTRO_VIDEO_PATH = "./res/opening/intro.mp4";
 const ID_VIDEO_SECTION_COMPONENT = "unlock_auto_play_container";
 const ID_VIDEO_PLAYER_COMPONENT = "my-video-player";
 

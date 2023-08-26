@@ -41,14 +41,29 @@ ALL_SCENE_ARRAY.forEach(scene => {
     
     if(scene.defalutOption != null) {
         const defaultSceneFromMap = STORY_TREE[scene.defalutOption.id];
-        scene.defalutOption.index = defaultSceneFromMap.index;
+        if(defaultSceneFromMap == null) {
+            console.log("missing default")
+            console.log(scene)
+        }
+        else 
+        {
+            scene.defalutOption.index = defaultSceneFromMap.index;
+        }
     }
     
     if(scene.children != null) {
         
         scene.children.forEach(child => {
             const childSceneFromMap = STORY_TREE[child.id];
-            child.index = childSceneFromMap.index;
+            if(childSceneFromMap == null)
+            {
+                console.log("missing child")
+                console.log(scene)
+                console.log(child)
+            }
+            else {
+                child.index = childSceneFromMap.index;
+            }
         });
     }
 });
