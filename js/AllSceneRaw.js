@@ -696,4 +696,126 @@ const ALL_SCENE_ARRAY = [
             ]
         } 
     },
+
+    /**separador*/
+    /** Default 00012 */
+    {
+        id:"00012", // metada de guia
+        name:"intro", // metada de guia
+        parentId:"00005", // metada de guia
+        description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
+        
+        mediaType: TYPES.IMAGEN,
+        mediaPath:"./res/scenes/scene0004/marco.png",
+        /** los substítulos son opcionales */
+        substitles: [ 
+            {character:"Pedro", text:"Había una vez"}, 
+            {character:"Pedro", text:"En un lugar muy, muy lejano..."},
+            {character:"Narrador", text:"soy tu consciencia"}, 
+            {character:"Narrador", text:"esa voz en tu mente"}
+        ],
+        sceneDuration: 10000, // 10 segundos, el tiempo que dura la escena
+        timmerStartAt: 6000, // 6 segundos después de iniciada la escena
+        timmerDuration: 4000, // 4 segundos el tiempo que dura el timmer
+        audioTracks: {
+            channel00:[{
+                    startAt:2000, // 2 segundos después de iniciada la escena para reproduccir el audio
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                },
+                {
+                    startAt:500, // 0.5 segundos después de finalizado el audio anterior
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                }
+            ],
+            channel01:[{
+                    startAt:2000, // 2 segundos después de iniciada la escena para reproduccir el audio
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                },
+                {
+                    startAt:500, // 0.5 segundos después de finalizado el audio anterior
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                }
+            ],
+            channel02:[{
+                    startAt:2000, // 2 segundos después de iniciada la escena para reproduccir el audio
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                },
+                {
+                    startAt:500, // 0.5 segundos después de finalizado el audio anterior
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                }
+        
+            ],
+            channel03:[{
+                    startAt:2000, // 2 segundos después de iniciada la escena para reproduccir el audio
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                },
+                {
+                    startAt:500, // 0.5 segundos después de finalizado el audio anterior
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                }
+            ]
+        } 
+    },
+
+    /**separador*/
+    /** Default 00016 */
+    {
+        id:"00016", // metada de guia
+        name:"intro", // metada de guia
+        parentId:"00006", // metada de guia
+        description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
+        
+        mediaType: TYPES.IMAGEN,
+        mediaPath:"./res/scenes/scene0004/marco.png",
+        /** los substítulos son opcionales */
+        substitles: [ 
+            {character:"Pedro", text:"Había una vez"}, 
+            {character:"Pedro", text:"En un lugar muy, muy lejano..."},
+            {character:"Narrador", text:"soy tu consciencia"}, 
+            {character:"Narrador", text:"esa voz en tu mente"}
+        ],
+        sceneDuration: 10000, // 10 segundos, el tiempo que dura la escena
+        timmerStartAt: 6000, // 6 segundos después de iniciada la escena
+        timmerDuration: 4000, // 4 segundos el tiempo que dura el timmer
+        audioTracks: {
+            channel00:[{
+                    startAt:2000, // 2 segundos después de iniciada la escena para reproduccir el audio
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                },
+                {
+                    startAt:500, // 0.5 segundos después de finalizado el audio anterior
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                }
+            ],
+            channel01:[{
+                    startAt:2000, // 2 segundos después de iniciada la escena para reproduccir el audio
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                },
+                {
+                    startAt:500, // 0.5 segundos después de finalizado el audio anterior
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                }
+            ],
+            channel02:[{
+                    startAt:2000, // 2 segundos después de iniciada la escena para reproduccir el audio
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                },
+                {
+                    startAt:500, // 0.5 segundos después de finalizado el audio anterior
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                }
+        
+            ],
+            channel03:[{
+                    startAt:2000, // 2 segundos después de iniciada la escena para reproduccir el audio
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                },
+                {
+                    startAt:500, // 0.5 segundos después de finalizado el audio anterior
+                    trackPath: "./res/scena_00000/audio_white.ogg",
+                }
+            ]
+        } 
+    },
 ];
