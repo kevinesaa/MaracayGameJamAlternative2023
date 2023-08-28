@@ -75,11 +75,7 @@ class GameplayScreen {
 
     showScreen() {
         this.gamePlayScreenSection.style.display = this.gamePlayScreenSectionCcsClass;
-        this.audioController.play({
-            channelIndex: 0,
-            path: GAME_PLAY_SONG,
-            loop: true
-        });
+        
     }
     
     hideScreen() {
@@ -126,17 +122,6 @@ class GameplayScreen {
                     this.playerVotes[player] = true;
                     this.players[player][option] = true;
                     this.players[player].defalutOption = false;
-
-                    
-
-                    /** */
-                    this.audioController.play({ 
-                        channelIndex:3,
-                        path:"./res/mainMenu/start.mp3",
-                        loop: false
-                    });
-
-                    
                 }
             }
         }
@@ -145,7 +130,7 @@ class GameplayScreen {
     loadScene() {
         const scene = this.scenes[this.currentSceneIndex];
         console.log(scene.name);
-        //this.audioController.stopAllChannels();
+        
         this.gameplaySubtitlesController.reset();
         this.gameplaySubtitlesController.start(scene.substitles.map(c => c.text + "<br>"), 500);
         

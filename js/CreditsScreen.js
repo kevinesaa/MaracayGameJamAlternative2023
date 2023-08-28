@@ -24,11 +24,6 @@ class CreditsScreen {
     
     showScreen() {
         this.creditsSection.style.display = this.creditsSectionCssClass;
-        this.audioController.play({ 
-            channelIndex:0,
-            path:CREDITS_PATH_SONG,
-            loop: true
-        });
     }
     
     hideScreen() {
@@ -40,11 +35,6 @@ class CreditsScreen {
         const key = event.key.toUpperCase();
         if(key == this.KEYBOARD_CODES.BACK_MENU_SCREEN)
         {
-            this.audioController.play({ 
-                channelIndex:3,
-                path:CREDITS_SOUND,
-                loop: false
-            });
             setTimeout(()=>{this.onBackToMenuScreen();}, 2000);
         }
     }

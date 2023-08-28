@@ -33,19 +33,12 @@ class MenuScreen {
     }
 
     showScreen() {
-        this.menuScreenSection.style.display = this.menuScreenSectionCcsClass;
-        
-        this.audioController.play({ 
-            channelIndex:0,
-            path:MAIN_MENU_PATH_SONG,
-            loop: true
-        });
-        
+        this.menuScreenSection.style.display = this.menuScreenSectionCcsClass; 
     }
     
     hideScreen() {
         this.menuScreenSection.style.display = HIDE_STYLE_CLASS;
-        this.audioController.stopChannelByIndex(0);
+        
     }
 
     onKeyButtonHandler(event) {
@@ -104,13 +97,7 @@ class MenuScreen {
 
         if(key == this.KEYBOARD_CODES.START_GAME)
         {
-            this.audioController.play({ 
-                channelIndex:3,
-                path:"./res/mainMenu/start.mp3",
-                loop: false
-            });
-
-            setTimeout(()=>{this.onStartGame();}, 2000);
+            this.onStartGame();
         }
     }
 

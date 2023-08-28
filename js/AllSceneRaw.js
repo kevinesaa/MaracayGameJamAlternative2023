@@ -108,7 +108,7 @@ const ALL_SCENE_ARRAY = [
         description: /* metada de guia */ "sale de su casa",
         
         mediaType: TYPES.IMAGEN,
-        mediaPath:"./res/scenes/scene0001/marco.png",
+        mediaPath:"./res/scenes/scene0001/camino.png",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Narrador", text:"El clima se siente frío..."}, 
@@ -208,7 +208,7 @@ const ALL_SCENE_ARRAY = [
         description: /* metada de guia */ "se muestra cómo inicia la aventura. Presenta personajes y mundo.",
         
         mediaType: TYPES.IMAGEN,
-        mediaPath:"./res/scenes/scene0002/marco.png",
+        mediaPath:"./res/scenes/scene0002/marco.jpg",
         /** los substítulos son opcionales */
         substitles: [ 
             {character:"Pedro", text:"La mantis no te ha respondido...sera que no te entiende?"}, 
