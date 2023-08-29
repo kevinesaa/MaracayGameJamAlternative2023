@@ -19,14 +19,20 @@ class GameplaySubtitlesController {
         this.shouldExecute = true;
         this.message = message;
         this.interval = setInterval(() => {
+            
             if (this.shouldExecute) {
-                if (this.index < this.message.length) {
-                this.subtitlesDiv.innerHTML += this.message[this.index];
-                    this.index++;
-                } else {
+                
+                if (this.index >= this.message.length) {
+                    
                     this.stop();
+                } 
+                else {
+                    
+                    this.subtitlesDiv.innerHTML += this.message[this.index];
+                    this.index++;
                 }
             }
+            
         }, time);
     }
     
