@@ -1,7 +1,8 @@
 const ID_MENU_SECTION_COMPONENT = "main_menu_container";
+const ID_PLAYER_CHECK_BASE = 'player_check_';
 const PLAYER_ONE_JOIN_SOUND  = "./res/mainMenu/player_one_join.wav"; 
-const MAIN_MENU_PATH_SONG = "./res/mainMenu/SONG.mp3"; 
-
+const MAIN_MENU_PATH_SONG = "./res/mainMenu/song.mp3"; 
+const MAX_PLAYER_SUPORT = 3;
 
 class MenuScreen {
     
@@ -16,6 +17,7 @@ class MenuScreen {
         PLAYER_THREE_JOIN:"3",
     };
 
+    playerChecks = Array.from({length: MAX_PLAYER_SUPORT}).fill(0);
     menuScreenSection;
     menuScreenSectionCcsClass;
     audioController;
@@ -28,6 +30,11 @@ class MenuScreen {
 
     init() {
         this.menuScreenSection = document.getElementById(ID_MENU_SECTION_COMPONENT);
+        for(let i = 0; i < this.playerChecks.length; i++) {
+            const playerHtmlId = `${ID_PLAYER_CHECK_BASE}${i}`;
+            this.playerChecks[i] = document.getElementById(playerHtmlId);
+        }
+        
         this.menuScreenSectionCcsClass = this.menuScreenSection.style.display;
         this.audioController.init();
     }
@@ -46,7 +53,7 @@ class MenuScreen {
         const key = event.key.toUpperCase();
         if(key == this.KEYBOARD_CODES.PLAYER_ONE_JOIN)
         {
-            const player1Check = document.getElementById("player1_check");
+            const player1Check = this.playerChecks[0];
             player1Check.checked = !player1Check.checked;
             console.log("PLAYER ONE JOIN/UNJOIN")
             if(player1Check.checked) {
@@ -60,7 +67,7 @@ class MenuScreen {
         }
         if(key == this.KEYBOARD_CODES.PLAYER_TWO_JOIN)
         {
-            const player2Check = document.getElementById("player2_check");
+            const player2Check = this.playerChecks[1];
             player2Check.checked = !player2Check.checked;
             console.log("PLAYER TWO JOIN/UNJOIN")
             if(player2Check.checked) {
@@ -73,7 +80,7 @@ class MenuScreen {
         }
         if(key == this.KEYBOARD_CODES.PLAYER_THREE_JOIN)
         {
-            const player3Check = document.getElementById("player3_check");
+            const player3Check = this.playerChecks[2];
             player3Check.checked = !player3Check.checked;
             console.log("PLAYER THREE JOIN/UNJOIN")
             if(player3Check.checked) {
@@ -125,18 +132,15 @@ class MenuScreen {
         
         const players = [];
         
-        for(let i=0; i < 3; i++)
-        {
-            const k = i+1;
-            const playerKey = `player${k}_check`;
-            const playerCheck = document.getElementById(playerKey);
+        for(let i = 0; i < this.playerChecks.length; i++) {
+            const playerCheck = this.playerChecks[i];
             if(playerCheck.checked) {
                 
-                players.push(`player${k}`);
+                players.push(`player${i}`);
                 playerCheck.checked = false;
             }
         }
-        
+
         if(players.length <= 0) {
             console.log("NO HAY JUGADORES EN LA PARTIDA")
         }

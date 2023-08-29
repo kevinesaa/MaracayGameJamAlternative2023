@@ -15,9 +15,9 @@ class GameplayScreen {
 
     KEYBOARD_CODES = {  
         BACK_MENU_SCREEN:"ESCAPE" ,
-        player1:{option0:"A",option1:"S",option2:"D" },
-        player2:{option0:"J",option1:"K",option2:"L" },
-        player3:{option0:"ARROWLEFT",option1:"ARROWDOWN",option2:"ARROWRIGHT" },
+        player0:{option0:"A",option1:"S",option2:"D" },
+        player1:{option0:"J",option1:"K",option2:"L" },
+        player2:{option0:"ARROWLEFT",option1:"ARROWDOWN",option2:"ARROWRIGHT" },
     };
     
     imageView;
