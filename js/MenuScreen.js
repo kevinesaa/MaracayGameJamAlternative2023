@@ -2,7 +2,7 @@ const ID_MENU_SECTION_COMPONENT = "main_menu_container";
 const ID_PLAYER_CHECK_BASE = 'player_check_';
 const PLAYER_ONE_JOIN_SOUND  = "./res/mainMenu/player_one_join.wav"; 
 const MAIN_MENU_PATH_SONG = "./res/mainMenu/song.mp3"; 
-const MAX_PLAYER_SUPORT = 3;
+const MAX_PLAYER_SUPPORT = 3;
 
 class MenuScreen {
     
@@ -17,7 +17,7 @@ class MenuScreen {
         PLAYER_THREE_JOIN:"3",
     };
 
-    playerChecks = Array.from({length: MAX_PLAYER_SUPORT}).fill(0);
+    playerChecks = Array.from({length: MAX_PLAYER_SUPPORT}).fill(0);
     menuScreenSection;
     menuScreenSectionCcsClass;
     audioController;

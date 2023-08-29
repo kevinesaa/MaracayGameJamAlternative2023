@@ -1,9 +1,10 @@
-const ID_BASE_AUDIO_CHANNEL = "audio-channel-0";
+const ID_BASE_AUDIO_CHANNEL = "audio-channel-";
+const MAX_AUDIO_CHANNEL_SUPPORT = 4;
 
 class AudioController {
     
-    shouldPlay = [false, false, false, false];
-    audioChannels = [0,0,0,0];
+    shouldPlay = Array.from({length: MAX_AUDIO_CHANNEL_SUPPORT}).fill(false);
+    audioChannels = Array.from({length: MAX_AUDIO_CHANNEL_SUPPORT}).fill(0);
     onAudioChannelFinishEventBus;
 
 
