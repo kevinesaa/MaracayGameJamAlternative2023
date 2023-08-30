@@ -1,3 +1,5 @@
+console.log(`número de escena: ${ALL_SCENE_ARRAY.length}`);
+
 const STORY_TREE = ALL_SCENE_ARRAY.map( (scene, index) => {
     
     const node = scene;

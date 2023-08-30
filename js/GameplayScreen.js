@@ -129,7 +129,12 @@ class GameplayScreen {
 
     loadScene() {
         const scene = this.scenes[this.currentSceneIndex];
+        console.log("scena by name: ");
         console.log(scene.name);
+        console.log("scena by id: ");
+        console.log(scene.id);
+        console.log("scena by index: ");
+        console.log(scene.index);
         
         this.gameplaySubtitlesController.reset();
         this.gameplaySubtitlesController.start(scene.substitles.map(c => c.text + "<br>"), 500);
