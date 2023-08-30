@@ -5,7 +5,11 @@ const SCREENS =  Object.freeze({
     INIT:{name:"init", screenObject: new UnloadAutoPlayScreen() },
     MENU:{name:"menu", screenObject: new MenuScreen() },
     CREDITS:{name:"credits", screenObject: new CreditsScreen() }, 
-    GAME_PLAY:{name:"gamePlay", screenObject: new GameplayScreen() },
+    GAME_PLAY:{name:"gamePlay", 
+        screenObject: new GameplayScreen({
+            votingSystem: new SimpleVotingSystem()
+        })
+    },
 });
 
 let currentScreen = SCREENS.INIT;
