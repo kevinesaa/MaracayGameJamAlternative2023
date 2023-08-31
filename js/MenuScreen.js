@@ -57,11 +57,7 @@ class MenuScreen {
             player1Check.checked = !player1Check.checked;
             console.log("PLAYER ONE JOIN/UNJOIN")
             if(player1Check.checked) {
-                this.audioController.play({ 
-                    channelIndex:1,
-                    path:PLAYER_ONE_JOIN_SOUND,
-                    loop: false
-                });
+                this.audioController.play({path:PLAYER_ONE_JOIN_SOUND});
             }
             
         }
@@ -71,11 +67,7 @@ class MenuScreen {
             player2Check.checked = !player2Check.checked;
             console.log("PLAYER TWO JOIN/UNJOIN")
             if(player2Check.checked) {
-                this.audioController.play({ 
-                    channelIndex:2,
-                    path:PLAYER_ONE_JOIN_SOUND,
-                    loop: false
-                });
+                this.audioController.play({ path:PLAYER_ONE_JOIN_SOUND });
             }
         }
         if(key == this.KEYBOARD_CODES.PLAYER_THREE_JOIN)
@@ -84,22 +76,14 @@ class MenuScreen {
             player3Check.checked = !player3Check.checked;
             console.log("PLAYER THREE JOIN/UNJOIN")
             if(player3Check.checked) {
-                this.audioController.play({ 
-                    channelIndex:3,
-                    path:PLAYER_ONE_JOIN_SOUND,
-                    loop: false
-                });
+                this.audioController.play({path:PLAYER_ONE_JOIN_SOUND});
             }
         }
 
         if(key == this.KEYBOARD_CODES.GO_TO_CREDITS)
         {
             this.onShowCredits();
-            this.audioController.play({ 
-                channelIndex:3,
-                path:PLAYER_ONE_JOIN_SOUND,
-                loop: false
-            });
+            this.audioController.play({ path:PLAYER_ONE_JOIN_SOUND });
         }
 
         if(key == this.KEYBOARD_CODES.START_GAME)

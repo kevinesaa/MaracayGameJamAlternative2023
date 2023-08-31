@@ -49,11 +49,11 @@ class UnloadAutoPlayScreen {
             this.videoPlayer.src = INTRO_VIDEO_PATH;
             this.videoPlayer.load();
             const channelLenght = this.audioController.getChannelsCount();
-            for(let i=0; i < channelLenght; i++) {
+            for(let i = 0; i < channelLenght; i++) {
                 this.audioController.play({
-                    channelIndex:i, 
-                    path:AUDIO_WHITE_PATH, 
-                    loop:false
+                    channelIndex: i, 
+                    path: AUDIO_WHITE_PATH, 
+                    loop: false
                 });
             }
             this.audioController.stopAllChannels();

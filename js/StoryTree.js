@@ -8,7 +8,7 @@ const STORY_TREE = ALL_SCENE_ARRAY.map( (scene, index) => {
         node.timmerStartAt = 0;
     }
     node.timmerDuration = node.sceneDuration - node.timmerStartAt;
-    node.sceneDuration = node.sceneDuration + 1000;
+    node.sceneDuration = node.sceneDuration + 1500;
     if(node.defalutOption != null)
     {
         node.defalutOption.parentId = node.id;

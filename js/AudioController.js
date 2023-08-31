@@ -1,5 +1,5 @@
 const ID_BASE_AUDIO_CHANNEL = "audio-channel-";
-const MAX_AUDIO_CHANNEL_SUPPORT = 4;
+const MAX_AUDIO_CHANNEL_SUPPORT = 16;
 
 class AudioController {
     
@@ -30,11 +30,29 @@ class AudioController {
     /** @param { channelIndex, path, loop } audioProperties  */
     play( audioProperties) {
         
+        let channelIndex = -1;
         if(audioProperties.channelIndex != null) {
-            const channel = this.audioChannels[audioProperties.channelIndex];
-            this.shouldPlay[audioProperties.channelIndex] = true;
+            channelIndex = audioProperties.channelIndex;
+        }
+        else {
+            
+            for(let i = 0; i < this.audioChannels.length ; i++) {
+                
+                const channel = this.audioChannels[i];
+                const available = channel.ended || channel.paused;
+                
+                if(available) {
+                    channelIndex = i;
+                    break;
+                }
+            }
+        }
+
+        if(channelIndex != -1) {
+            const channel = this.audioChannels[channelIndex];
+            this.shouldPlay[channelIndex] = true;
             channel.src = audioProperties.path;
-            channel.loop = audioProperties.loop;
+            channel.loop = audioProperties.loop != null && audioProperties.loop === true;
             channel.load();
         }
     }
