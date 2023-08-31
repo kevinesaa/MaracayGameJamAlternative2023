@@ -12,8 +12,10 @@ class SimpleVotingSystem {
     setPlayers(players) {
         /** ["player0","player1","player2"] */
         this.players = players;
-        this.playerVotesStatus = {};
-        
+    }
+
+    getPlayers() {
+        return this.players;
     }
 
     vote(player,option) {
@@ -27,11 +29,11 @@ class SimpleVotingSystem {
             try {
                 
                 option = parseInt(option)
-                if(option >= this.optionsLength) {
-                    console.log(`not valid index option`);
+                if(option >= 0 && option < this.optionsLength) {
+                    this.playerVotesStatus[player] = option;
                 }
                 else {
-                    this.playerVotesStatus[player] = option;
+                    console.log(`not valid index option`);
                 }
             }
             catch(err) {
@@ -43,6 +45,7 @@ class SimpleVotingSystem {
 
     setVotingOptions(optionsArrayLenght) {
         /** 3 */
+        this.playerVotesStatus = {};
         this.optionsLength = parseInt(optionsArrayLenght);
         for(let i = 0; i < this.players.length; i++) {
             const p = this.players[i];

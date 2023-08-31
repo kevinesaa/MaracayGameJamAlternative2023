@@ -6,6 +6,7 @@ const GAME_PLAY_SONG="./res/gameplay/song.mp3";
 
 class GameplayScreen {
     
+    abstractVotingSystem;
     audioController;
     gameplaySubtitlesController;
     gameplayOptionsController;
@@ -15,9 +16,9 @@ class GameplayScreen {
 
     KEYBOARD_CODES = {  
         BACK_MENU_SCREEN:"ESCAPE" ,
-        player0:{option0:"A",option1:"S",option2:"D" },
-        player1:{option0:"J",option1:"K",option2:"L" },
-        player2:{option0:"ARROWLEFT",option1:"ARROWDOWN",option2:"ARROWRIGHT" },
+        player0:{"0":"A","1":"S","2":"D" },
+        player1:{"0":"J","1":"K","2":"L" },
+        player2:{"0":"ARROWLEFT","1":"ARROWDOWN","2":"ARROWRIGHT" },
     };
     
     imageView;
@@ -31,9 +32,9 @@ class GameplayScreen {
     isOptionsOnScreen;
     isCountingVotes;
     currentSceneIndex;
-    players;
-    playerVotes;
-    playersKeyMapping;
+    
+    
+    playersIds;
     gamePlayScreenSection;
     gamePlayScreenSectionCcsClass;
 
@@ -41,7 +42,8 @@ class GameplayScreen {
     changeSceneRunnableWrapper;
     endMovieRunnableWrapper;
     
-    constructor() {
+    constructor(gameplayScreenSetup) {
+        this.abstractVotingSystem = gameplayScreenSetup.votingSystem;
         this.onBackToMenuScreenEventBus = new EventBus();
         this.onMovieEndEventBus = new EventBus();
         this.gameplayOptionsController = new GameplayOptionsController();
@@ -101,7 +103,7 @@ class GameplayScreen {
             return;
         }
 
-        for(let player of this.playersKeyMapping) {
+        for(let player of this.playersIds) {
             const playerKeyboard = this.KEYBOARD_CODES[player];
             let option = null;
             for(let k of Object.keys(playerKeyboard)) {
@@ -112,17 +114,9 @@ class GameplayScreen {
             }
             
             if(option != null) {
-                console.log("opcion seleccionada");
-                console.log(`${player}: ${option}`);
-
-                if(this.playerVotes[player]) {
-                    console.log(`ya el ${player} voto`);
-                }
-                else {
-                    this.playerVotes[player] = true;
-                    this.players[player][option] = true;
-                    this.players[player].defalutOption = false;
-                }
+                
+                this.abstractVotingSystem.vote(player,option);
+                break;
             }
         }
     }
@@ -156,8 +150,8 @@ class GameplayScreen {
             this.playVideoGamePlay();
         }
         
-        this.isCountingVotes = false;
         this.isOptionsOnScreen = false;
+        this.isCountingVotes = false;
         this.hideOptions();
         if(scene.children == null) {
             
@@ -165,11 +159,8 @@ class GameplayScreen {
             return;
         }
         
-        for(let player of this.playersKeyMapping) {
-            this.players[player] = this.buildPlayerOption();
-            this.playerVotes[player] = false;
-        }
         
+        this.abstractVotingSystem.setVotingOptions(scene.children.length);
         this.showOptionsRunnableWrapper.execute(scene.timmerStartAt);
         this.changeSceneRunnableWrapper.execute(scene.sceneDuration);
     }
@@ -190,46 +181,16 @@ class GameplayScreen {
     countVotes() {
         console.log("contando votos");
         this.isCountingVotes = true;
-        let votes = {};
-        let maxVoteCount = 0;
-        //contando votos
-        for(let player of this.playersKeyMapping) {
-
-            for(let opcion of Object.keys(this.players[player]) ) {
-                
-                if(!votes.hasOwnProperty(opcion)) {
-                    votes[opcion] = 0;
-                }
-
-                if(this.players[player][opcion]){
-                    votes[opcion]++;
-                    if(votes[opcion] > maxVoteCount)
-                    {
-                        maxVoteCount = votes[opcion];
-                    }
-                    break;
-                }
-            }
-        }
-
         
-        votes = Object.entries(votes)
-            .map( (pair) => { return { key:pair[0], value:pair[1]} })
-            .filter(el => el.value == maxVoteCount);
-        
-        let winnerOption = votes[ this.getRandomInt(votes.length) ];
-        
-        //si es la opción por default
         const currentScene = this.scenes[this.currentSceneIndex];
-        if(currentScene[winnerOption.key] != null) {
-            winnerOption = currentScene[winnerOption.key];
+        let winnerOption = this.abstractVotingSystem.getWinnerOption();
+        if(winnerOption != -1) {
+            winnerOption = currentScene.children[winnerOption];
         }
         else {
-
-            let childIndex =  winnerOption.key.charAt(winnerOption.key.length - 1);
-            childIndex = parseInt(childIndex);
-            winnerOption = currentScene.children[childIndex];
+            winnerOption = currentScene.defalutOption;
         }
+        
         this.currentSceneIndex = winnerOption.index;
         this.loadScene();
     }
@@ -242,17 +203,12 @@ class GameplayScreen {
         this.onBackToMenuScreenEventBus.unsubscribe(func);
     }
     
-    getRandomInt(max) {
-        return Math.floor(Math.random() * max);
-    }
-
     start(data) {
         console.log("inicia la peli");
-        this.scenes = data.scenes;
         this.currentSceneIndex = 0;
-        this.players =  {};
-        this.playerVotes = {};
-        this.playersKeyMapping = data.players;
+        this.scenes = data.scenes;
+        this.playersIds = data.players;
+        this.abstractVotingSystem.setPlayers(data.players);
         this.loadScene();
     }
 
@@ -294,7 +250,5 @@ class GameplayScreen {
         this.onMovieEndEventBus.unsubscribe(func);
     }
 
-    buildPlayerOption() {
-        return {option0:false, option1:false, option2:false, defalutOption:true };
-    }
+    
 }
