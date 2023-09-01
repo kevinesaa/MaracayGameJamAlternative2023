@@ -43,7 +43,10 @@ class GameplayScreen {
     endMovieRunnableWrapper;
     
     hideOptionsWrapperFunc = () => {
-        this.hideOptions();
+        
+        setTimeout(() => {
+            this.hideOptions();
+        },300);
     };
 
     constructor(gameplayScreenSetup) {

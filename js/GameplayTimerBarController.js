@@ -25,20 +25,24 @@ class GameplayTimerBarController {
         this.interval = setInterval(() => {
             
             const currentTime = new Date().getTime();
-            const elapsedTime = currentTime - startTime;
-            const progressPercent = (elapsedTime / timeToFill) * 100;
-          
-            this.progress = Math.min(progressPercent, 100);
-            this.progressBar.style.width = this.progress + "%";
-    
+            
             if (currentTime >= endTime) {
+                
+                this.progressBar.style.width = "100%";
                 this.onTimerEndEventBus.dispatch();
                 this.stop();
+            }
+            else {
+                
+                const elapsedTime = currentTime - startTime;
+                const progressPercent = ((elapsedTime) / timeToFill) * 100;
+                this.progress = Math.min(progressPercent + 20, 100);
+                this.progressBar.style.width = this.progress + "%";
             }
 
         }, 100);
     }
-    
+
     stop() {
 
         clearInterval(this.interval);
