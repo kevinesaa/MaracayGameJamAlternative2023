@@ -73,11 +73,11 @@ class GameplayScreen {
         this.gameplayOptionsController.init();
         this.gameplayTimerBarController.init();
         this.gameplaySubtitlesController.init();
+        //this.gameplayTimerBarController.
     }
 
     showScreen() {
         this.gamePlayScreenSection.style.display = this.gamePlayScreenSectionCcsClass;
-        
     }
     
     hideScreen() {

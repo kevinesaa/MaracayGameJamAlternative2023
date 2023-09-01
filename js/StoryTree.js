@@ -1,13 +1,23 @@
-console.log(`número de escena: ${ALL_SCENE_ARRAY.length}`);
+console.log(`número de escenas en el array: ${ALL_SCENE_ARRAY.length}`);
 
 const STORY_TREE = ALL_SCENE_ARRAY.map( (scene, index) => {
     
     const node = scene;
     node.index = index;
+    
     if(node.timmerStartAt > node.sceneDuration) {
         node.timmerStartAt = 0;
     }
-    node.timmerDuration = node.sceneDuration - node.timmerStartAt;
+    
+    if( node.timmerDuration > node.sceneDuration ) {
+        node.timmerDuration = node.sceneDuration - node.timmerStartAt;
+    }
+
+    if(node.timmerDuration < 0) {
+        node.timmerDuration = node.sceneDuration;
+    }
+    
+    
     node.sceneDuration = node.sceneDuration + 1500;
     if(node.defalutOption != null)
     {
@@ -34,7 +44,7 @@ const STORY_TREE = ALL_SCENE_ARRAY.map( (scene, index) => {
     
     return node;
 
-}).reduce( (acc, current) =>{
+}).reduce( (acc, current) => {
     acc[current.id] = current;
     return acc;
 },{});
@@ -42,30 +52,36 @@ const STORY_TREE = ALL_SCENE_ARRAY.map( (scene, index) => {
 ALL_SCENE_ARRAY.forEach(scene => {
     
     if(scene.defalutOption != null) {
+
         const defaultSceneFromMap = STORY_TREE[scene.defalutOption.id];
-        if(defaultSceneFromMap == null) {
-            console.log("missing default")
-            console.log(scene)
+        if(defaultSceneFromMap != null) 
+        {
+            scene.defalutOption.index = defaultSceneFromMap.index;
         }
         else 
         {
-            scene.defalutOption.index = defaultSceneFromMap.index;
+            console.error("missing default")
+            console.error(scene)
         }
     }
     
     if(scene.children != null) {
         
         scene.children.forEach(child => {
+
             const childSceneFromMap = STORY_TREE[child.id];
-            if(childSceneFromMap == null)
+            if(childSceneFromMap != null)
             {
-                console.log("missing child")
-                console.log(scene)
-                console.log(child)
-            }
-            else {
                 child.index = childSceneFromMap.index;
+            }
+            else 
+            {    
+                console.error("missing child")
+                console.error(scene)
+                console.error(child)
             }
         });
     }
 });
+
+console.log(`número de escenas en el arbol: ${Object.values(ALL_SCENE_ARRAY).length}`);

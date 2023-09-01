@@ -4,11 +4,17 @@ class SimpleVotingSystem {
     optionsLength;
     playerVotesStatus;
     players;
+    votes;
+    maxVoted;
 
     constructor() {
 
     }
-
+    
+    static get DEFAULT_OPTION() {
+        return -1;
+    }
+    
     setPlayers(players) {
         /** ["player0","player1","player2"] */
         this.players = players;
@@ -29,11 +35,27 @@ class SimpleVotingSystem {
             try {
                 
                 option = parseInt(option)
-                if(option >= 0 && option < this.optionsLength) {
-                    this.playerVotesStatus[player] = option;
+                if(option < 0 && option >= this.optionsLength) {
+                    console.log(`not valid index option`);
                 }
                 else {
-                    console.log(`not valid index option`);
+                    this.playerVotesStatus[player] = option;
+                    if(!this.votes.hasOwnProperty(option)) {
+                        this.votes[option] = 0;
+                    }
+                    this.votes[option]++;
+                    this.votes[SimpleVotingSystem.DEFAULT_OPTION]--;
+                    if(this.maxVoted.index == SimpleVotingSystem.DEFAULT_OPTION) {
+                        this.maxVoted.vote--;
+                    }
+                    
+                    if(this.votes[option] > this.maxVoted.vote) {
+                        
+                        this.maxVoted = {
+                            index: option, 
+                            votes: this.votes[option]
+                        };
+                    }
                 }
             }
             catch(err) {
@@ -46,10 +68,13 @@ class SimpleVotingSystem {
     setVotingOptions(optionsArrayLenght) {
         /** 3 */
         this.playerVotesStatus = {};
+        this.votes = {};
+        this.votes[SimpleVotingSystem.DEFAULT_OPTION] = this.players.length;
+        this.maxVoted = { index: SimpleVotingSystem.DEFAULT_OPTION, votes: this.players.length };
         this.optionsLength = parseInt(optionsArrayLenght);
         for(let i = 0; i < this.players.length; i++) {
             const p = this.players[i];
-            this.playerVotesStatus[p] = -1;
+            this.playerVotesStatus[p] = SimpleVotingSystem.DEFAULT_OPTION;
         }
     }
 
@@ -58,26 +83,10 @@ class SimpleVotingSystem {
     }
 
     getWinnerOption() {
-        let votes = {};
-        let max = 0;
-        for(let i = 0; i < this.players.length; i++) {
-            /** player */
-            const p = this.players[i];
-            /** vote */
-            const v = this.playerVotesStatus[p];
-            if(!votes.hasOwnProperty(v)) {
-                votes[v] = 0;
-            }
-            votes[v]++;
-            if(votes[v] > max)
-            {
-                max = votes[v];
-            }
-        }
-
-        votes = Object.entries(votes)
+        
+        const votes = Object.entries(this.votes)
             .map( (pair) => { return { key:pair[0], value:pair[1]} })
-            .filter(el => el.value == max);
+            .filter(el => el.value == this.maxVoted.votes);
         
         const winnerOption = votes[ this.getRandomInt(votes.length) ];
         

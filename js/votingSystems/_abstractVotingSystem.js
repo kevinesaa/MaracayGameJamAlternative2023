@@ -9,7 +9,11 @@ class VotingSystemAbstract {
         }
     }
 
-     /** ["player0","player1","player2"] */
+    static get DEFAULT_OPTION() {
+        return -1;
+    }
+
+    /** ["player0","player1","player2"] */
     setPlayers(players) {
         this.players = players;
     }
