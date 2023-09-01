@@ -42,6 +42,10 @@ class GameplayScreen {
     changeSceneRunnableWrapper;
     endMovieRunnableWrapper;
     
+    hideOptionsWrapperFunc = () => {
+        this.hideOptions();
+    };
+
     constructor(gameplayScreenSetup) {
         this.abstractVotingSystem = gameplayScreenSetup.votingSystem;
         this.onBackToMenuScreenEventBus = new EventBus();
@@ -73,7 +77,6 @@ class GameplayScreen {
         this.gameplayOptionsController.init();
         this.gameplayTimerBarController.init();
         this.gameplaySubtitlesController.init();
-        //this.gameplayTimerBarController.
     }
 
     showScreen() {
@@ -184,11 +187,13 @@ class GameplayScreen {
         
         const currentScene = this.scenes[this.currentSceneIndex];
         let winnerOption = this.abstractVotingSystem.getWinnerOption();
-        if(winnerOption != -1) {
-            winnerOption = currentScene.children[winnerOption];
+        
+        if(winnerOption == VotingSystemAbstract.DEFAULT_OPTION) {
+            
+            winnerOption = currentScene.defalutOption;
         }
         else {
-            winnerOption = currentScene.defalutOption;
+            winnerOption = currentScene.children[winnerOption];    
         }
         
         this.currentSceneIndex = winnerOption.index;
@@ -209,6 +214,7 @@ class GameplayScreen {
         this.scenes = data.scenes;
         this.playersIds = data.players;
         this.abstractVotingSystem.setPlayers(data.players);
+        this.gameplayTimerBarController.subscribeOnTimerEnd(this.hideOptionsWrapperFunc);
         this.loadScene();
     }
 
@@ -224,12 +230,14 @@ class GameplayScreen {
 
     stop() {
         console.log("detener todo antes de mandar al menu principal");
-        this.stopVideoGamePlay();
         this.showOptionsRunnableWrapper.interrupt();
         this.changeSceneRunnableWrapper.interrupt();
         this.endMovieRunnableWrapper.interrupt();
         this.gameplaySubtitlesController.stop();
+        this.gameplayTimerBarController.stop();
         this.audioController.stopAllChannels();
+        this.stopVideoGamePlay();
+        this.gameplayTimerBarController.unsubscribeOnTimerEnd(this.hideOptionsWrapperFunc);
         this.onBackToMenuScreenEventBus.dispatch();
     }
 
@@ -238,7 +246,10 @@ class GameplayScreen {
         this.showOptionsRunnableWrapper.interrupt();
         this.changeSceneRunnableWrapper.interrupt();
         this.gameplaySubtitlesController.stop();
+        this.gameplayTimerBarController.stop();
         this.audioController.stopAllChannels();
+        this.stopVideoGamePlay();
+        this.gameplayTimerBarController.unsubscribeOnTimerEnd(this.hideOptionsWrapperFunc);
         this.onMovieEndEventBus.dispatch();
     }
 
@@ -248,7 +259,5 @@ class GameplayScreen {
 
     unsubscribeOnMovieEnd(func) {
         this.onMovieEndEventBus.unsubscribe(func);
-    }
-
-    
+    }    
 }
