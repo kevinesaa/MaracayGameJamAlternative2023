@@ -46,10 +46,10 @@ class SimpleVotingSystem {
                     this.votes[option]++;
                     this.votes[SimpleVotingSystem.DEFAULT_OPTION]--;
                     if(this.maxVoted.index == SimpleVotingSystem.DEFAULT_OPTION) {
-                        this.maxVoted.vote--;
+                        this.maxVoted.votes--;
                     }
                     
-                    if(this.votes[option] > this.maxVoted.vote) {
+                    if(this.votes[option] > this.maxVoted.votes) {
                         
                         this.maxVoted = {
                             index: option, 
